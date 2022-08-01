@@ -4,6 +4,7 @@ import { getUser } from '../services/pitch-users';
 import { getSession } from '../services/pitch-sessions';
 
 import styles from '../styles/Home.module.css';
+import HomeContent from '../contents/home-content';
 
 export default function Home() {
   const [user, setUser] = useState({});
@@ -12,14 +13,14 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        S<title>Create Next App</title>
       </Head>
 
       <main className={styles.main}>
         {/* <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1> */}
-
+        <HomeContent />
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>

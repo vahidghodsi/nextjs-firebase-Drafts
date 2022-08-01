@@ -1,0 +1,58 @@
+.rate-scale-container {
+  display: flex;
+  align-items: center;
+}
+
+.rate-scale {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: none;
+  /* border-radius: 10px; */
+}
+
+.rate-scale-item {
+  display: flex;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+}
+.rate-scale-item:not(:last-of-type) {
+  margin-right: 12px;
+}
+
+.rate-scale-item input {
+  position: absolute;
+  margin: 0;
+  opacity: 0;
+}
+
+.rate-scale-item input + label {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.rate-scale-item label > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+}
+
+.rate-scale-item input:checked + label {
+  border: 2px solid rgb(37, 37, 37);
+  padding: 2px;
+  /* width: 24px; */
+  /* height: 24px; */
+}
+.rate-scale-item input:checked + label > div {
+  border-radius: 2px;
+  background: rgb(49, 49, 49);
+  color: white;
+}
