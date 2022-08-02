@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        S<title>Create Next App</title>
+        <title>Create Next App</title>
       </Head>
 
       <main className={styles.main}>
@@ -21,7 +21,7 @@ export default function Home() {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1> */}
         <HomeContent />
-        <p className={styles.description}>
+        {/* <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
         </p>
@@ -49,7 +49,7 @@ export default function Home() {
             <p>username : {user.name} </p>
             <p>staerted at : {user.created_at}</p>
           </a>
-        </div>
+        </div> */}
       </main>
 
       <footer className={styles.footer}>

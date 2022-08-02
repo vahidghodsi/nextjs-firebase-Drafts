@@ -11,14 +11,14 @@ const InputRatesScale = ({
 }) => {
   // const range = Math.abs(max - min + 1);
   const range = Math.abs(max - min) + 1;
-  console.log(range);
+  // console.log(range);
   id = id || key || parseInt(Math.random() * 100);
 
   let els = [...Array(range)].map((i, index) => {
     let cellNum = reverse ? max - index : min + index;
     if (max < min) cellNum = reverse ? max + index : min - index;
     return (
-      <div className={styles['rate-scale-item']}>
+      <div key={index} className={styles['rate-scale-item']}>
         <input
           type="radio"
           id={`rate-${id}-${cellNum}`}
