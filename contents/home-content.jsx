@@ -1,10 +1,11 @@
 import InputRatesScale from '../component/input-rate-scale';
-import InputCheckbox from '../component/input-ckeckbox';
+import InputCheckbox from '../component/input-checkbox';
 import InputSwitch from '../component/input-switch';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import styles from '../styles/HomeContent.module.css';
+import Toolset from '../component/toolset';
 
 const HomeContent = () => {
   const [testVal, setTestVal] = useState(false);
@@ -19,6 +20,20 @@ const HomeContent = () => {
 
   return (
     <div>
+      <div>
+        <motion.div
+          style={{ height: '20px', width: '20px' }}
+          initial={{ x: 0, opacity: 0 }}
+          animate={{
+            x: 200,
+            opacity: 1,
+            background: 'lightblue',
+            borderRadius: '50%',
+            rotate: '90deg',
+            transition: { duration: 2, type: 'easeInOut' },
+          }}
+        />
+      </div>
       <div>
         <InputRatesScale name="rateScale1" />
         {/* <InputRatesScale
@@ -48,7 +63,9 @@ const HomeContent = () => {
           style={{ width: '40px', height: '40px', background: 'green' }}
         />
       </div> */}
-      <div></div>
+      <div style={{ display: 'flex' }}>
+        <Toolset />
+      </div>
       <div></div>
       <div></div>
     </div>

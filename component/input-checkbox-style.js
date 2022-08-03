@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 
 const styles = css({
   // '.box': {
-  '.switch-box': {
+  '.checkbox': {
     position: 'relative',
     height: '20px',
     width: '20px',
@@ -47,10 +47,10 @@ const styles = css({
 
     'input:checked + label': {
       border: 'var(--border-primary)',
-
+      boxShadow: 'var(--shadow-primary)',
       '> .box': {
         // background: 'var(--color-primary)',
-        color: 'white',
+        // color: 'white',
         ' > div ': {
           // background: 'var(--color-primary)',
           // opacity: 1,

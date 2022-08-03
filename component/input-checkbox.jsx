@@ -2,16 +2,16 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 import { motion } from 'framer-motion';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import styles, { switchTumbMotionVariant } from './input-switch-style';
+import styles, { switchTumbMotionVariant } from './input-checkbox-style';
 // import { app_message_info_types } from '@models/app-message-types';
 
-const InputSwitch = (props) => {
-  //   console.log('[InputSwitch:]', props);
-  const [value, setValue] = useState(props.value || '');
+const InputCheckbox = (props) => {
+  //   console.log('[InputCheckbox:]', props);
+  const [value, setValue] = useState(props.value || false);
   const [touched, setTouched] = useState(false);
-  const name = props.name || 'switch';
+  const name = props.name || 'checkbox';
 
   let mainCls = [
     [true, '_input-switch'],
@@ -82,47 +82,45 @@ const InputSwitch = (props) => {
   );
 
   let labelBoxEl = (
-    <label
-      htmlFor={name}
-      className="_label"
-      style={
-        value
-          ? { justifyContent: 'flex-end' }
-          : { justifyContent: 'flex-start' }
-      }
-    >
-      <motion.div
-        className="handle"
-        layout
-        // initial={{}}
-        animate={
-          value
-            ? {
-                background: 'var(--color-primary)',
-              }
-            : {
-                background: 'var(--color-secondary)',
-              }
-        }
-        transition={{ type: 'easeInOut' }}
-      />
+    <label htmlFor={name} className="_label">
+      <div className="box">
+        <motion.div
+          animate={value ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.15, type: 'easeInOut' }}
+        />
+        <motion.div
+          animate={value ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ delay: 0.05, duration: 0.3, type: 'easeInOut' }}
+        />
+      </div>
     </label>
   );
-
-  // let checkBox = <div className={'checkbox'}></div>;
 
   return (
     <div className={mainCls.join(' ')} css={[styles, { ...props.style }]}>
       <div className="_grid-2col-fix-left _align-center">
         {labelTextEl}
-        <div className={'switch-box'}>
+        <div className={'checkbox'}>
           {inputEl}
           {labelBoxEl}
         </div>
       </div>
-      {props.message}
     </div>
   );
 };
 
-export default InputSwitch;
+export default InputCheckbox;
+
+{
+  /* <div key={index} className={styles['rate-scale-item']}>
+        <input
+          type="radio"
+          id={`rate-${id}-${cellNum}`}
+          name={`rate-scale-${id}`}
+          value={cellNum}
+        ></input>
+        <label htmlFor={`rate-${id}-${cellNum}`}>
+          <div>{cellNum}</div>
+        </label>
+      </div> */
+}

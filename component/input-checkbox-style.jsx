@@ -4,14 +4,14 @@ import { jsx } from '@emotion/react';
 import { motion } from 'framer-motion';
 import { Fragment, useEffect, useState } from 'react';
 
-import styles, { switchTumbMotionVariant } from './input-switch-style';
+import styles, { switchTumbMotionVariant } from './input-checkbox-style';
 // import { app_message_info_types } from '@models/app-message-types';
 
 const InputSwitch = (props) => {
   //   console.log('[InputSwitch:]', props);
   const [value, setValue] = useState(props.value || '');
   const [touched, setTouched] = useState(false);
-  const name = props.name || 'switch';
+  const name = props.name || 'checkbox';
 
   let mainCls = [
     [true, '_input-switch'],
@@ -119,6 +119,7 @@ const InputSwitch = (props) => {
           {inputEl}
           {labelBoxEl}
         </div>
+        {/* {checkBox} */}
       </div>
       {props.message}
     </div>
