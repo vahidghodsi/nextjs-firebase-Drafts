@@ -7,6 +7,7 @@ const styles = css({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+  overflow: 'visible',
   '.icon': {
     border: 'var(--border-secondary)',
     borderRadius: '5px',
@@ -32,18 +33,21 @@ const styles = css({
     fontSize: '12px',
     display: 'flex',
     alignItems: 'center',
-    height: 'calc(100% + 24px)',
-    // width: '100px',
-    width: 'auto',
-    // width: '200px',
-    // height: '40px',
-    marginLeft: '-12px',
-    paddingLeft: '48px',
+    minHeight: 'calc(100% + 24px)',
+    // marginLeft: '-12px',
+    padding: '6px',
+    paddingLeft: '42px',
+    paddingRight: '12px',
     border: 'var(--border-secondary)',
-    borderRadius: '5px',
+    borderRadius: '8px',
     background: 'var(--background)',
     boxShadow: 'var(--shadow-primary)',
 
+    // maxWidth: '500px',
+    ' > span': {
+      whiteSpace: 'nowrap',
+      // maxWidth: '500px',
+    },
     // '.icon:hover + .alt-text': {
 
     //   opacity: '1',
@@ -58,6 +62,13 @@ const styles = css({
     //   // height: '100%',
     //   width: '100px',
     // },
+  },
+  '&._rtl': {
+    '.alt-text': {
+      right: 0,
+      paddingLeft: '12px',
+      paddingRight: '42px',
+    },
   },
 });
 

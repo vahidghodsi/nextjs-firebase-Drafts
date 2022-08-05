@@ -29,39 +29,45 @@ const Toolset = (props) => {
   return (
     <div className={mainCls.join(' ')} css={[styles, { ...props.style }]}>
       {/* <div className="_toolset feedback _grid-row _gap-12"> */}
-      {/* <motion.li
-        whileHover={{ scale: 1.2, zIndex: 100, transition: { delay: 0.5 } }}
-        onHoverStart={(e) => setHovered(true)}
-        onHoverEnd={(e) => setHovered(false)}
-      >
-        <div className="icon">{'X'}</div>
-        <motion.div
-          className="alt-text"
-          animate={
-            hovered
-              ? { opacity: 1, transition: { delay: 0.5 } }
-              : { opacity: 0, transition: { delay: -0.5 } }
-          }
-        >
-          {'explanation of the tool'}
-        </motion.div>
-      </motion.li>
-      <motion.li whileHover={{ scale: 1.2 }}>
-        <div className="icon">{'Y'}</div>
-        <div className="alt-text">{'explanation of the tool'}</div>
-      </motion.li>
-      <motion.li whileHover={{ scale: 1.2 }}>
-        <div className="icon">{'Z'}</div>
-        <div className="alt-text">{'explanation of the tool'}</div>
-      </motion.li> */}
+
       <ToolsetItem icon={'C'}>
         {'add a comment on the slide ( press C )'}
       </ToolsetItem>
       <ToolsetItem icon={'X'}>{'like the slide ( press L )'}</ToolsetItem>
       <ToolsetItem icon={'Y'}>{'dis-like the slide ( press K )'}</ToolsetItem>
-      <ToolsetItem icon={'Z'}>
+      <ToolsetItem icon={'Z'} rtl>
         {'another tool, whatever it is ( press nothing )'}
       </ToolsetItem>
+      <ToolsetItem icon={'N'} rtl>
+        nice!, just random bullshit. another tool, whatever it is ( press
+        nothing ). another tool, whatever it is ( press nothing ).another tool,
+        whatever it is ( press nothing )
+      </ToolsetItem>
+      <ToolsetItem icon={'N'} rtl>
+        <div>
+          <div>
+            nice!, just random bullshit. another tool, whatever it is ( press
+            nothing ).
+          </div>
+          <div>
+            another tool, whatever it is ( press nothing ).another tool,
+            whatever it is ( press nothing )
+          </div>
+          <div>
+            another tool, whatever it is ( press nothing ).another tool,
+            whatever it is ( press nothing )
+          </div>
+          <div>
+            another tool, whatever it is ( press nothing ).another tool,
+            whatever it is ( press nothing )
+          </div>
+          <div>
+            another tool, whatever it is ( press nothing ).another tool,
+            whatever it is ( press nothing )
+          </div>
+        </div>
+      </ToolsetItem>
+      <ToolsetItem icon={'Z'}></ToolsetItem>
       {/* </div> */}
     </div>
   );
