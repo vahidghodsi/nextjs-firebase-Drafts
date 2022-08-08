@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 
 import styles from '../styles/HomeContent.module.css';
 import Toolset from '../component/toolset';
+import UserBehaviorGraph from '../component/user-behavior-graph';
 
 const HomeContent = () => {
   const [testVal, setTestVal] = useState(false);
@@ -66,7 +67,9 @@ const HomeContent = () => {
       <div style={{ display: 'flex' }}>
         <Toolset />
       </div>
-      <div></div>
+      <div>
+        <UserBehaviorGraph items={undefined} />
+      </div>
       <div></div>
     </div>
   );

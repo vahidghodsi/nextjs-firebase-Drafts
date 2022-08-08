@@ -1,6 +1,12 @@
 import { app, db } from './firebase-app';
 // import { collection, getDocs } from 'firebase/firestore';
-import { getFirestore, collection, getDocs, getDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  getDoc,
+  doc,
+} from 'firebase/firestore';
 
 // const usersDb = firestore.collection(db, '/users');
 const usersDb = collection(db, 'pitch-users');
@@ -26,6 +32,10 @@ export const getUser = async (username) => {
     });
   });
 };
+
+// getDoc(doc(collection(db, 'pitch-sessions'), 'T6Y5nzi4PbQDjXqra5bc')).then(
+//   (res) => console.log(res.data())
+// );
 
 // firebase
 //     .firestore()
