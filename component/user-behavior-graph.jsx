@@ -1,6 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
+import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
@@ -12,82 +13,82 @@ const sampleSession = {
   behavior: [
     {
       created_at: 1659509282534,
-      Code: 10,
+      code: 10,
     },
     {
       created_at: 1659509331593,
-      Code: 50,
+      code: 50,
     },
     {
-      Code: 50,
+      code: 50,
       created_at: 1659509606874,
     },
     {
-      Code: 20,
+      code: 20,
       created_at: 1659509615677,
     },
     {
-      Code: 60,
+      code: 60,
       created_at: 1659509617263,
     },
     {
       created_at: 1659509619808,
-      Code: 20,
+      code: 20,
     },
     {
       created_at: 1659509622231,
-      Code: 20,
+      code: 20,
     },
     {
-      Code: 20,
+      code: 20,
       created_at: 1659509623407,
     },
     {
-      Code: 20,
+      code: 20,
       created_at: 1659509624232,
     },
     {
-      Code: 20,
+      code: 20,
       created_at: 1659509624492,
     },
     {
-      Code: 60,
+      code: 60,
       created_at: 1659509626049,
     },
     {
       created_at: 1659509630569,
-      Code: 20,
+      code: 20,
     },
     {
-      Code: 20,
+      code: 30,
       created_at: 1659509630973,
     },
     {
-      Code: 20,
+      code: 20,
       created_at: 1659509631894,
     },
     {
-      Code: 20,
+      code: 20,
       created_at: 1659509632481,
     },
     {
       created_at: 1659509633187,
-      Code: 20,
+      code: 20,
     },
     {
       created_at: 1659509633857,
-      Code: 20,
+      code: 20,
     },
     {
       created_at: 1659509641061,
-      Code: 50,
+      code: 50,
     },
     {
-      Code: 50,
+      code: 50,
       created_at: 1659509650189,
     },
     {
-      Code: 55,
+      code: 55,
       created_at: 1659509653079,
     },
   ],
@@ -158,7 +159,9 @@ const UserBehaviorGraph = (props) => {
 
   // const actions = props.actions || [1, 2, 3];
   const actions = sampleSession.behavior;
-  const session_start = actions[0].created_at;
+  // const session_start = actions[0].created_at;
+  const session_start = dayjs(actions[0].created_at);
+  console.log(session_start);
 
   let mainCls = [
     [true, '_user-behavior'],
@@ -176,28 +179,52 @@ const UserBehaviorGraph = (props) => {
     .filter((cls) => cls);
 
   const actionItemsEl = actions.map((action, index, array) => {
-    let at = 0;
-    if (index > 0) at = action.created_at - array[0].created_at;
-    let at_sec = parseInt(at / 100);
-    let at_min = parseInt(at / 3600);
-    console.log(at_sec);
+    let at_sec = dayjs(action.created_at).diff(session_start, 'seconds');
+    let at_min = dayjs(action.created_at).diff(session_start, 'minutes');
+    let atDisplay = `${at_min}:${at_sec % 60}`;
+    // console.log(at_min, ':', at_sec % 60);
 
-    let diff = 0;
-    if (index > 0) diff = action.created_at - array[index - 1].created_at;
-    let diff_sec = parseInt(diff / 100);
-    let diff_min = parseInt(diff / 3600);
-    // console.log(diff_min, ':', diff_sec);
+    let diff_sec = 0;
+    let diff_min = 0;
+    if (index > 0) {
+      diff_sec = dayjs(action.created_at).diff(
+        dayjs(array[index - 1].created_at),
+        'seconds'
+      );
+      diff_min = dayjs(action.created_at).diff(
+        dayjs(array[index - 1].created_at),
+        'minutes'
+      );
+    }
+    let diffDisplay =
+      diff_sec < 60 ? `${diff_sec}` : `${diff_min}:${diff_sec % 60}`;
+    console.log(diff_sec);
 
+    let itemWidth = diff_sec < 60 ? diff_sec * 5 : 240;
+    // let itemWidth = 40;
+
+    // let cls = `behavior-action ${action.code}`;
     return (
-      <div className={'behavior-action'}>
+      <motion.div
+        className={'behavior-action'}
+        style={{ width: itemWidth }}
+        whileHover={{ scale: 1.05 }}
+        data-action-code={action.code}
+      >
         <div data-cat={'info'}></div>
-        <div data-cat={'time'}>{`${at_min}:${at_sec}`}</div>
-        <div data-cat={'time'}>{`${diff_min}:${diff_sec}`}</div>
+        <div data-cat={'time'}>{atDisplay}</div>
+        <div data-cat={'time-diff'}>{diffDisplay}</div>
         <div data-cat={'presentation'}></div>
-        <div data-cat={'slide-forward'}></div>
-        <div data-cat={'slide-backward'}></div>
-        <div data-cat={'engagement'}></div>
-      </div>
+        <div data-cat={'slide-forward'}>
+          {action.code === 20 && <div className={'action-sign'}>{'>'}</div>}
+        </div>
+        <div data-cat={'slide-backward'}>
+          {action.code === 30 && <div className={'action-sign'}>{'<'}</div>}
+        </div>
+        <div data-cat={'engagement'}>
+          {action.code === 50 && <div className={'action-sign'}>{'*'}</div>}
+        </div>
+      </motion.div>
     );
   });
 

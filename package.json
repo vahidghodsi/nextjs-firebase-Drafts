@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.0",
+    "dayjs": "^1.11.4",
     "firebase": "^9.9.1",
     "framer-motion": "^6.5.1",
     "next": "^12.1.0",
