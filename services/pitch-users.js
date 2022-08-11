@@ -33,10 +33,6 @@ export const getUser = async (username) => {
   });
 };
 
-// getDoc(doc(collection(db, 'pitch-sessions'), 'T6Y5nzi4PbQDjXqra5bc')).then(
-//   (res) => console.log(res.data())
-// );
-
 // firebase
 //     .firestore()
 //     .collection('restaurants')

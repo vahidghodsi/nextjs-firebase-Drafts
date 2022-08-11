@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 
 import styles from '../styles/HomeContent.module.css';
 import Toolset from '../component/toolset';
-import UserBehaviorGraph from '../component/user-behavior-graph';
+import Link from 'next/dist/client/link';
 
 const HomeContent = () => {
   const [testVal, setTestVal] = useState(false);
@@ -58,6 +58,9 @@ const HomeContent = () => {
         <InputSwitch lg name="switchbox4" label={'is that working?'} />
         <InputSwitch xl name="switchbox5" label={'is that working?'} />
       </div>
+      <div style={{ display: 'flex' }}>
+        <Toolset />
+      </div>
       {/* <div style={tempStyle} onClick={() => setTestVal(!testVal)}>
         <motion.div
           layout
@@ -65,10 +68,7 @@ const HomeContent = () => {
         />
       </div> */}
       <div style={{ display: 'flex' }}>
-        <Toolset />
-      </div>
-      <div>
-        <UserBehaviorGraph items={undefined} />
+        <Link href="./behavior"> '= To User Behavior Graph ='</Link>
       </div>
       <div></div>
     </div>

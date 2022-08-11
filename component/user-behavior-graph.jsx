@@ -20,6 +20,10 @@ const sampleSession = {
       code: 50,
     },
     {
+      code: 20,
+      created_at: 1659509333000,
+    },
+    {
       code: 50,
       created_at: 1659509606874,
     },
@@ -159,9 +163,16 @@ const UserBehaviorGraph = (props) => {
 
   // const actions = props.actions || [1, 2, 3];
   const actions = sampleSession.behavior;
+  const actionsNavigation = actions.filter(
+    (action) =>
+      action.code === 20 ||
+      action.code === 21 ||
+      action.code === 30 ||
+      action.code === 31
+  );
   // const session_start = actions[0].created_at;
   const session_start = dayjs(actions[0].created_at);
-  console.log(session_start);
+  // console.log(session_start);
 
   let mainCls = [
     [true, '_user-behavior'],
@@ -198,7 +209,7 @@ const UserBehaviorGraph = (props) => {
     }
     let diffDisplay =
       diff_sec < 60 ? `${diff_sec}` : `${diff_min}:${diff_sec % 60}`;
-    console.log(diff_sec);
+    // console.log(diff_sec);
 
     let itemWidth = diff_sec < 60 ? diff_sec * 5 : 240;
     // let itemWidth = 40;
@@ -206,9 +217,10 @@ const UserBehaviorGraph = (props) => {
     // let cls = `behavior-action ${action.code}`;
     return (
       <motion.div
+        key={index}
         className={'behavior-action'}
         style={{ width: itemWidth }}
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ y: 0 }}
         data-action-code={action.code}
       >
         <div data-cat={'info'}></div>
@@ -217,6 +229,7 @@ const UserBehaviorGraph = (props) => {
         <div data-cat={'presentation'}></div>
         <div data-cat={'slide-forward'}>
           {action.code === 20 && <div className={'action-sign'}>{'>'}</div>}
+          {/* {action.code === 20 && <div className={'action-sign'}>{'>'}</div>} */}
         </div>
         <div data-cat={'slide-backward'}>
           {action.code === 30 && <div className={'action-sign'}>{'<'}</div>}

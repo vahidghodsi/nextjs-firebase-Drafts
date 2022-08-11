@@ -7,13 +7,14 @@ const styles = css({
     '.behavior-action': {
       // height: '50px',
       // width: '30px',
-      minWidth: '15px',
+      minWidth: '10px',
       maxWidth: '100px',
+      padding: '10px 0',
       // marginLeft: '1px',
       ' > div': {
-        height: '30px',
+        height: '20px',
         '&:hover': {
-          filter: 'contrast(200%)',
+          // filter: 'contrast(200%)',
         },
         '.action-sign': {
           position: 'relative',
@@ -23,6 +24,9 @@ const styles = css({
           fontWeight: 'bold',
           fontSize: '16px',
         },
+      },
+      '&:hover': {
+        // margin: '0 -5px',
       },
     },
 
@@ -58,7 +62,10 @@ const styles = css({
 
     '.behavior-action:hover': {
       // width: '100px !important',
-      background: 'var(--color-light)',
+      // background: 'var(--color-light)',
+      // border: 'var(--border-primary)',
+      boxShadow: 'var(--shadow-primary)',
+      borderRadius: '5px',
       zindex: '50',
       ' > div[data-cat=time]': {
         position: 'relative',
