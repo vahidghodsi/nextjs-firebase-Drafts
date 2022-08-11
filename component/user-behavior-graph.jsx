@@ -160,9 +160,10 @@ const sampleSession = {
 const UserBehaviorGraph = (props) => {
   //   console.log('[UserBehaviorGraph:]', props);
   const [hovered, setHovered] = useState(false);
+  const session = props.session || sampleSession;
 
   // const actions = props.actions || [1, 2, 3];
-  const actions = sampleSession.behavior;
+  const actions = sampleSession.behavior || [];
   const actionsNavigation = actions.filter(
     (action) =>
       action.code === 20 ||

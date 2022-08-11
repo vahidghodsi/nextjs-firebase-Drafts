@@ -30,13 +30,14 @@ const PitchSessions = (props) => {
   const sessionsEl = sessions.map((session, index) => (
     <motion.div
       key={index}
-      // className={'behavior-action'}
+      className={'session'}
       // style={{ width: '20px' }}
       // whileHover={{ y: 0 }}
       // data-action-code={action.code}
+      onClick={() => props.setCurrentSession(session.id)}
     >
-      {/* <div> {session.id}</div>
-      <div>{session.user_id}</div> */}
+      <div> {session.id}</div>
+      <div>{session.user_id}</div>
     </motion.div>
   ));
 
