@@ -11,20 +11,21 @@ export default function BehaviorPage() {
   const [session, setSession] = useState({});
 
   return (
-    <div className={styles.container2}>
+    <div className="_fix-layout">
       <Head>
         <title>Create Next App</title>
       </Head>
+      <div className="_main-content">
+        <main className="_container">
+          <BehaviorContent />
+        </main>
 
-      <main className={styles.main}>
-        <BehaviorContent />
-      </main>
-
-      <footer className={styles.footer}>
-        <a href="https://next.new" target="_blank" rel="noopener noreferrer">
-          Created with&nbsp;<b>next.new</b>&nbsp;⚡️
-        </a>
-      </footer>
+        <footer className={styles.footer}>
+          <a href="https://next.new" target="_blank" rel="noopener noreferrer">
+            Created with&nbsp;<b>next.new</b>&nbsp;⚡️
+          </a>
+        </footer>
+      </div>
     </div>
   );
 }

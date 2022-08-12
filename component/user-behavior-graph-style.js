@@ -3,30 +3,38 @@ import { css } from '@emotion/react';
 const styles = css({
   width: '100%',
   '.body': {
-    display: 'flex',
-    '.behavior-action': {
-      // height: '50px',
-      // width: '30px',
-      minWidth: '10px',
-      maxWidth: '100px',
-      padding: '10px 0',
-      // marginLeft: '1px',
-      ' > div': {
-        height: '20px',
-        '&:hover': {
-          // filter: 'contrast(200%)',
-        },
-        '.action-sign': {
+    '.timeline-row': {
+      display: 'flex',
+      '.behavior-action': {
+        // height: '50px',
+        // width: '30px',
+        // minWidth: '4px',
+        // maxWidth: '200px',
+        padding: '10px 0',
+        // marginLeft: '1px',
+        ' > div': {
           position: 'relative',
-          left: '-8px',
-          width: '16px',
-          textAlign: 'center',
-          fontWeight: 'bold',
-          fontSize: '16px',
+          height: '20px',
+          '&:hover': {
+            // filter: 'contrast(200%)',
+          },
+          '.action-sign': {
+            position: 'absolute',
+            left: '-8px',
+            width: '16px',
+            textAlign: 'center',
+            fontWeight: 'bold',
+            fontSize: '16px',
+          },
+          '.action-text': {
+            textAlign: 'center',
+            // fontWeight: 'bold',
+            fontSize: '12px',
+          },
         },
-      },
-      '&:hover': {
-        // margin: '0 -5px',
+        '&:hover': {
+          // margin: '0 -5px',
+        },
       },
     },
 

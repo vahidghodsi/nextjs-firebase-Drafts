@@ -30,7 +30,11 @@ const PitchSessions = (props) => {
   const sessionsEl = sessions.map((session, index) => (
     <motion.div
       key={index}
-      className={'session'}
+      className={
+        props.currentSession && session.id === props.currentSession.id
+          ? 'session active'
+          : 'session'
+      }
       // style={{ width: '20px' }}
       // whileHover={{ y: 0 }}
       // data-action-code={action.code}

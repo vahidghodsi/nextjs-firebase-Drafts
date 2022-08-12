@@ -10,9 +10,9 @@ const BehaviorContent = () => {
   const [sessions, setSessions] = useState(undefined);
   const [currentSession, setCurrentSession] = useState(undefined);
   const [testVal, setTestVal] = useState(false);
-  // console.log(sessions);
+  // console.log(sessions.find((s) => s.id === currentSession));
+  // console.log(currentSession);
 
-  console.log(currentSession);
   useEffect(() => {
     firebaseSessions
       .getSessions()
@@ -39,14 +39,18 @@ const BehaviorContent = () => {
       <div>
         <PitchSessions
           items={sessions}
-          setCurrentSession={(session_id) => setCurrentSession(session_id)}
+          setCurrentSession={(session_id) =>
+            setCurrentSession(sessions.find((s) => s.id === session_id))
+          }
+          currentSession={currentSession}
         />
       </div>
 
       <div>
-        <UserBehaviorGraph session={currentSession} />
+        <div>
+          <UserBehaviorGraph session={currentSession} />
+        </div>
       </div>
-      <div></div>
     </div>
   );
 };
