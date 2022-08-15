@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 const styles = css({
   width: '100%',
   '.body': {
+    overflow: 'scroll',
     '.timeline-row': {
       display: 'flex',
       '.behavior-action': {
@@ -42,6 +43,10 @@ const styles = css({
       // background: 'var(--color-info)',
       // opacity: '.3',
       background: 'rgba(200,200,200, .2)',
+      display: 'flex',
+      '> div': {
+        height: '100%',
+      },
     },
     '.behavior-action > div[data-cat=slide-backward]': {
       // background: 'var(--color-warning)',
@@ -101,10 +106,10 @@ const styles = css({
     },
 
     // ===== ENGAGEMENT
-    '.behavior-action[data-action-code = "50"]': {
+    '.behavior-action': {
       // background: 'green',
-      '> div[data-cat=engagement]': {
-        borderLeft: '1px solid var(--color-primary)',
+      ' div[data-cat=engagement-item]': {
+        borderLeft: '1px dashed var(--color-secondary)',
       },
     },
   },

@@ -21,7 +21,7 @@ const BehaviorContent = () => {
   }, []);
 
   return (
-    <div className="_grid-2col-fix-left">
+    <div className="_grid-2row-fix-top">
       {/* <div>
         <motion.div
           style={{ height: '20px', width: '20px' }}
@@ -36,7 +36,7 @@ const BehaviorContent = () => {
           }}
         />
       </div> */}
-      <div>
+      <div style={{ overflow: 'hidden', padding: '8px' }}>
         <PitchSessions
           items={sessions}
           setCurrentSession={(session_id) =>
@@ -46,10 +46,10 @@ const BehaviorContent = () => {
         />
       </div>
 
-      <div>
-        <div>
-          <UserBehaviorGraph session={currentSession} />
-        </div>
+      <div style={{ overflow: 'hidden', padding: '8px' }}>
+        {/* <div> */}
+        <UserBehaviorGraph session={currentSession} />
+        {/* </div> */}
       </div>
     </div>
   );

@@ -188,6 +188,9 @@ const UserBehaviorGraph = (props) => {
       action.Code === 75
   );
 
+  const actionCodesNavigation = [10, 15, 20, 21, 30, 31];
+  const actionCodesEngagement = [50, 51, 55, 60, 65, 70, 75];
+
   // const session_start = actions[0].created_at;
   const session_start =
     actions.length > 0 ? dayjs(actions[0].created_at) : undefined;
@@ -208,21 +211,39 @@ const UserBehaviorGraph = (props) => {
     .map((classCondition) => (classCondition[0] ? classCondition[1] : null))
     .filter((cls) => cls);
 
-  const actionItemsEl = actionsNavigation.map((action, index, array) => {
+  // =====  ==========
+
+  const actionCols = [];
+  actions.forEach((action, index, array) => {
+    if (actionCodesNavigation.includes(action.Code)) actionCols.push(action);
+    if (actionCodesEngagement.includes(action.Code)) {
+      if (actionCols[actionCols.length - 1].engagement) {
+        actionCols[actionCols.length - 1].engagement.push(action);
+      } else {
+        actionCols[actionCols.length - 1].engagement = [action];
+      }
+    }
+  });
+
+  const actionItemsEl = actionCols.map((action, index, array) => {
     let at_sec = dayjs(action.created_at).diff(session_start, 'seconds');
     let at_min = dayjs(action.created_at).diff(session_start, 'minutes');
     let atDisplay = `${at_min}:${at_sec % 60}`;
     // console.log(at_min, ':', at_sec % 60);
 
+    let diff_millisec = 0;
     let diff_sec = 0;
     let diff_min = 0;
-    if (index > 0) {
-      diff_sec = dayjs(action.created_at).diff(
-        dayjs(array[index - 1].created_at),
+    if (array[index + 1]) {
+      diff_millisec = dayjs(array[index + 1].created_at).diff(
+        dayjs(action.created_at)
+      );
+      diff_sec = dayjs(array[index + 1].created_at).diff(
+        dayjs(action.created_at),
         'seconds'
       );
-      diff_min = dayjs(action.created_at).diff(
-        dayjs(array[index - 1].created_at),
+      diff_min = dayjs(array[index + 1].created_at).diff(
+        dayjs(action.created_at),
         'minutes'
       );
     }
@@ -231,15 +252,58 @@ const UserBehaviorGraph = (props) => {
     // console.log(diff_sec);
 
     // let itemWidth = diff_sec < 60 ? diff_sec * 5 : 240;
-    let itemWidth = diff_sec * 6;
-    // let itemWidth = 40;
+    let widthAdjustUnit = 8 / 1000;
+    let itemWidth = diff_millisec * widthAdjustUnit;
 
-    // *****
-    // ** code is in capital C , change it to small letter
-    // let cls = `behavior-action ${action.Code}`;
+    // **** code is in capital C , change it to small letter *****
+
+    let engagementEl = null;
+    if (action.engagement) {
+      engagementEl = action.engagement.map((engag, index, array) => {
+        let last_item = index < array.length ? array[index + 1] : engag;
+        console.log(engag);
+        let engag_diff_millisec = 0;
+        // let engag_diff_sec = 0;
+        // let engag_diff_min = 0;
+
+        if (array[index + 1]) {
+          engag_diff_millisec = dayjs(array[index + 1].created_at).diff(
+            dayjs(engag.created_at)
+          );
+          // engag_diff_sec = dayjs(array[index + 1].created_at).diff(
+          //   dayjs(engag.created_at),
+          //   'seconds'
+          // );
+          // engag_diff_min = dayjs(array[index + 1].created_at).diff(
+          //   dayjs(engag.created_at),
+          //   'minutes'
+          // );
+        }
+
+        return (
+          <div
+            style={{ width: engag_diff_millisec * widthAdjustUnit }}
+            key={engag.created_at}
+            data-cat={'engagement-item'}
+          >
+            {action.Code === 50 && <div className={'action-sign'}>{'*'}</div>}
+          </div>
+        );
+      });
+
+      let firstEngagementOffset = dayjs(action.engagement[0].created_at).diff(
+        dayjs(action.created_at)
+      );
+      console.log(firstEngagementOffset);
+      engagementEl.unshift(
+        <div style={{ width: firstEngagementOffset * widthAdjustUnit }}></div>
+      );
+    }
+    // console.log(engagementEl);
+
     return (
       <motion.div
-        key={index}
+        key={action.created_at}
         className={'behavior-action'}
         style={{ width: itemWidth }}
         whileHover={{ y: 0 }}
@@ -257,56 +321,12 @@ const UserBehaviorGraph = (props) => {
         <div data-cat={'slide-backward'}>
           {action.Code === 30 && <div className={'action-sign'}>{'<'}</div>}
         </div>
-        <div data-cat={'engagement'}>
-          {action.Code === 50 && <div className={'action-sign'}>{'*'}</div>}
-        </div>
+        <div data-cat={'engagement'}>{engagementEl}</div>
       </motion.div>
     );
   });
 
-  const engagementItemsEl = actionsEngagement.map((action, index, array) => {
-    let at_sec = dayjs(action.created_at).diff(session_start, 'seconds');
-    let at_min = dayjs(action.created_at).diff(session_start, 'minutes');
-    let atDisplay = `${at_min}:${at_sec % 60}`;
-    // console.log(at_min, ':', at_sec % 60);
-
-    let diff_sec = 0;
-    let diff_min = 0;
-    if (index > 0) {
-      diff_sec = dayjs(action.created_at).diff(
-        dayjs(array[index - 1].created_at),
-        'seconds'
-      );
-      diff_min = dayjs(action.created_at).diff(
-        dayjs(array[index - 1].created_at),
-        'minutes'
-      );
-    }
-    let diffDisplay =
-      diff_sec < 60 ? `${diff_sec}` : `${diff_min}:${diff_sec % 60}`;
-    // console.log(diff_sec);
-
-    // let itemWidth = diff_sec < 60 ? diff_sec * 5 : 240;
-    let itemWidth = diff_sec * 6;
-    // let itemWidth = 40;
-
-    // *****
-    // ** code is in capital C , change it to small letter
-    // let cls = `behavior-action ${action.Code}`;
-    return (
-      <motion.div
-        key={index}
-        className={'behavior-action'}
-        style={{ width: itemWidth }}
-        whileHover={{ y: 0 }}
-        data-action-code={action.Code}
-      >
-        <div data-cat={'engagement'}>
-          {action.Code === 50 && <div className={'action-sign'}>{'*'}</div>}
-        </div>
-      </motion.div>
-    );
-  });
+  // =====  ==========
 
   return (
     <div className={mainCls.join(' ')} css={[styles, { ...props.style }]}>
@@ -314,7 +334,6 @@ const UserBehaviorGraph = (props) => {
       <div className={'body'}>
         <div className="_grid-2row">
           <div className="timeline-row">{actionItemsEl}</div>
-          <div className="timeline-row">{engagementItemsEl}</div>
         </div>
       </div>
     </div>

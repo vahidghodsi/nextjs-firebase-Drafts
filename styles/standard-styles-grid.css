@@ -44,7 +44,7 @@
 ._grid-3col-fix-right,
 ._grid-3col-fix-left-middle,
 ._grid-3col-fix-left-right,
-._grid-3col-fix-middle-right{
+._grid-3col-fix-middle-right {
   display: grid;
   column-gap: 12px;
   /* border: var(--border-dev); */

@@ -4,18 +4,22 @@ import { jsx } from '@emotion/react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import PitchSessionCard from './pitch-session-card';
 
-import styles from './pitch-sessions-style';
+import styles, { sessionsVariant } from './pitch-sessions-style';
 
 const PitchSessions = (props) => {
   //   console.log('[PitchSessions:]', props);
-  const sessions = props.items || [];
+  // const sessions = props.items || [];
+  const sessions = props.items
+    ? props.items.filter(
+        (session) => session.behavior && session.behavior.length > 1
+      )
+    : [];
   // console.log(sessions);
 
   let mainCls = [
     [true, '_user-behavior'],
-    // [true, '_grid-row'],
-    [true, '_gap-12'],
     [props.className, props.className],
     [props.disabled, 'disabled'],
     // [props.secondary, 'secondary'],
@@ -28,27 +32,26 @@ const PitchSessions = (props) => {
     .filter((cls) => cls);
 
   const sessionsEl = sessions.map((session, index) => (
-    <motion.div
-      key={index}
-      className={
-        props.currentSession && session.id === props.currentSession.id
-          ? 'session active'
-          : 'session'
-      }
-      // style={{ width: '20px' }}
-      // whileHover={{ y: 0 }}
-      // data-action-code={action.code}
-      onClick={() => props.setCurrentSession(session.id)}
-    >
-      <div> {session.id}</div>
-      <div>{session.user_id}</div>
-    </motion.div>
+    <PitchSessionCard
+      key={session.id}
+      session={session}
+      active={props.currentSession && session.id === props.currentSession.id}
+      setCurrentSession={(id) => props.setCurrentSession(session.id)}
+      variants={sessionsVariant}
+    />
   ));
 
   return (
     <div className={mainCls.join(' ')} css={[styles, { ...props.style }]}>
       <div className="context"></div>
-      <div className="body _grid-row">{sessionsEl}</div>
+      <motion.div
+        className="body _grid-row _gap-8"
+        variants={sessionsVariant}
+        initial={'initial'}
+        animate={'animate'}
+      >
+        {sessionsEl}
+      </motion.div>
     </div>
   );
 };
