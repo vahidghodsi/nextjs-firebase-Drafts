@@ -4,6 +4,7 @@ const styles = css({
   width: '100%',
   '.body': {
     overflow: 'scroll',
+    padding: '6px',
     '.timeline-row': {
       display: 'flex',
       '.behavior-action': {
@@ -15,7 +16,7 @@ const styles = css({
         // marginLeft: '1px',
         ' > div': {
           position: 'relative',
-          height: '20px',
+          height: '30px',
           '&:hover': {
             // filter: 'contrast(200%)',
           },
@@ -23,18 +24,45 @@ const styles = css({
             position: 'absolute',
             left: '-8px',
             width: '16px',
+            // bottom: '0',
             textAlign: 'center',
             fontWeight: 'bold',
             fontSize: '16px',
           },
           '.action-text': {
+            display: 'inline',
+            position: 'relative',
             textAlign: 'center',
             // fontWeight: 'bold',
             fontSize: '12px',
+            fontWeight: 'bold',
+            padding: '4px',
+            // background: 'var(--background)',
+            // height: '100%',
+            background: 'var(--color-light)',
+            // zIndex: '40',
+          },
+          '.time-span-line': {
+            position: 'absolute',
+            width: '100%',
+            height: '4px',
+            bottom: '15px',
+            borderTop: '1px dashed var(--color-middle)',
           },
         },
         '&:hover': {
           // margin: '0 -5px',
+        },
+      },
+      '&.scalebar': {
+        height: '15px',
+        fontWeight: 'bold',
+        fontSize: '10px',
+        borderBottom: '1px solid var(--color-secondary)',
+        '> div': {
+          height: '100%',
+          paddingLeft: '6px',
+          borderLeft: '1px solid var(--color-primary)',
         },
       },
     },
@@ -42,7 +70,8 @@ const styles = css({
     '.behavior-action > div[data-cat=engagement]': {
       // background: 'var(--color-info)',
       // opacity: '.3',
-      background: 'rgba(200,200,200, .2)',
+
+      background: 'var(--color-light)',
       display: 'flex',
       '> div': {
         height: '100%',
@@ -50,20 +79,25 @@ const styles = css({
     },
     '.behavior-action > div[data-cat=slide-backward]': {
       // background: 'var(--color-warning)',
-      // opacity: '.3',
-      background: 'rgba(200,200,200, .2)',
+      background: 'var(--color-light)',
+      display: 'flex',
+      justifyContent: 'center',
     },
     '.behavior-action > div[data-cat=slide-forward]': {
       // background: 'var(--color-success)',
-      // opacity: '.3',
-      background: 'rgba(200,200,200, .2)',
+      background: 'var(--color-light)',
+      display: 'flex',
+      justifyContent: 'center',
     },
     '.behavior-action > div[data-cat=presentation]': {
       height: '10px',
       borderTop: 'var(--border-secondary)',
     },
     '.behavior-action > div[data-cat=time]': {
-      fontSize: '10px',
+      paddingLeft: '6px',
+      fontSize: '12px',
+      fontWeight: 'bold',
+      opacity: '0',
     },
     '.behavior-action > div[data-cat=time-diff]': {
       fontSize: '10px',
@@ -79,10 +113,12 @@ const styles = css({
       // border: 'var(--border-primary)',
       boxShadow: 'var(--shadow-primary)',
       borderRadius: '5px',
-      zindex: '50',
+      zIndex: '50',
       ' > div[data-cat=time]': {
-        position: 'relative',
-        top: '-20px',
+        // position: 'relative',
+        // top: '-20px',
+        opacity: '1',
+
         // background: 'yellow',
       },
     },
@@ -109,6 +145,8 @@ const styles = css({
     '.behavior-action': {
       // background: 'green',
       ' div[data-cat=engagement-item]': {
+        position: 'relative',
+
         borderLeft: '1px dashed var(--color-secondary)',
       },
     },

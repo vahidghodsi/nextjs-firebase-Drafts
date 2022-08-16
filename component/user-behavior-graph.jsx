@@ -4,6 +4,7 @@ import { jsx } from '@emotion/react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import cloneObject from '../util/cloneObject';
 
 import styles from './user-behavior-graph-style';
 
@@ -160,41 +161,25 @@ const sampleSession = {
 const UserBehaviorGraph = (props) => {
   //   console.log('[UserBehaviorGraph:]', props);
   const [hovered, setHovered] = useState(false);
-  const session = props.session || sampleSession;
-  // console.log(session);
+  const session = props.session ? cloneObject(props.session) : sampleSession;
 
   // const actions = props.actions || [1, 2, 3];
   const actions = session.behavior || [];
-  const actionsNavigation = actions.filter(
-    (action) =>
-      action.Code === 10 ||
-      action.Code === 15 ||
-      action.Code === 20 ||
-      action.Code === 21 ||
-      action.Code === 30 ||
-      action.Code === 31
-  );
-
-  const actionsEngagement = actions.filter(
-    (action) =>
-      action.Code === 10 ||
-      action.Code === 15 ||
-      action.Code === 50 ||
-      action.Code === 51 ||
-      action.Code === 55 ||
-      action.Code === 60 ||
-      action.Code === 65 ||
-      action.Code === 70 ||
-      action.Code === 75
-  );
 
   const actionCodesNavigation = [10, 15, 20, 21, 30, 31];
   const actionCodesEngagement = [50, 51, 55, 60, 65, 70, 75];
 
+  const actionsNavigation = actions.filter((action) =>
+    actionCodesNavigation.includes(action.Code)
+  );
   // const session_start = actions[0].created_at;
   const session_start =
     actions.length > 0 ? dayjs(actions[0].created_at) : undefined;
-  // console.log(session_start);
+  const session_end =
+    actions.length > 0
+      ? dayjs(actions[actions.length - 1].created_at)
+      : undefined;
+  // console.log(session_end);
 
   let mainCls = [
     [true, '_user-behavior'],
@@ -212,9 +197,10 @@ const UserBehaviorGraph = (props) => {
     .filter((cls) => cls);
 
   // =====  ==========
+  const widthAdjustUnit = 8 / 1000;
 
   const actionCols = [];
-  actions.forEach((action, index, array) => {
+  actions.forEach((action) => {
     if (actionCodesNavigation.includes(action.Code)) actionCols.push(action);
     if (actionCodesEngagement.includes(action.Code)) {
       if (actionCols[actionCols.length - 1].engagement) {
@@ -252,7 +238,7 @@ const UserBehaviorGraph = (props) => {
     // console.log(diff_sec);
 
     // let itemWidth = diff_sec < 60 ? diff_sec * 5 : 240;
-    let widthAdjustUnit = 8 / 1000;
+
     let itemWidth = diff_millisec * widthAdjustUnit;
 
     // **** code is in capital C , change it to small letter *****
@@ -261,7 +247,7 @@ const UserBehaviorGraph = (props) => {
     if (action.engagement) {
       engagementEl = action.engagement.map((engag, index, array) => {
         let last_item = index < array.length ? array[index + 1] : engag;
-        console.log(engag);
+        // console.log(engag);
         let engag_diff_millisec = 0;
         // let engag_diff_sec = 0;
         // let engag_diff_min = 0;
@@ -286,7 +272,13 @@ const UserBehaviorGraph = (props) => {
             key={engag.created_at}
             data-cat={'engagement-item'}
           >
-            {action.Code === 50 && <div className={'action-sign'}>{'*'}</div>}
+            {engag.Code === 50 && <div className={'action-sign'}>{'+'}</div>}
+            {engag.Code === 51 && <div className={'action-sign'}>{'*'}</div>}
+            {engag.Code === 55 && <div className={'action-sign'}>{'-'}</div>}
+            {engag.Code === 60 && <div className={'action-sign'}>{'@'}</div>}
+            {engag.Code === 65 && <div className={'action-sign'}>{'-@'}</div>}
+            {engag.Code === 70 && <div className={'action-sign'}>{'%'}</div>}
+            {engag.Code === 75 && <div className={'action-sign'}>{'-%'}</div>}
           </div>
         );
       });
@@ -294,7 +286,7 @@ const UserBehaviorGraph = (props) => {
       let firstEngagementOffset = dayjs(action.engagement[0].created_at).diff(
         dayjs(action.created_at)
       );
-      console.log(firstEngagementOffset);
+      // console.log(firstEngagementOffset);
       engagementEl.unshift(
         <div style={{ width: firstEngagementOffset * widthAdjustUnit }}></div>
       );
@@ -310,22 +302,53 @@ const UserBehaviorGraph = (props) => {
         data-action-code={action.Code}
       >
         <div data-cat={'info'}></div>
-        <div data-cat={'time'}>{diff_sec > 1 && atDisplay}</div>
-        <div data-cat={'time-diff'}>{diff_sec > 1 && diffDisplay}</div>
+        <div data-cat={'time'}>{atDisplay}</div>
+        {/* <div data-cat={'time-diff'}>{diff_sec > 1 && diffDisplay}</div> */}
         <div data-cat={'presentation'}></div>
         <div data-cat={'slide-forward'}>
           {action.Code === 20 && <div className={'action-sign'}>{'>'}</div>}
-          {diff_sec > 1 && <div className={'action-text'}>{diffDisplay}</div>}
+          {action.Code === 20 && <div className="time-span-line"></div>}
+          {action.Code === 20 && diff_sec > 1 && (
+            <div className={'action-text'}>{diffDisplay}</div>
+          )}
           {/* {action.Code === 20 && <div className={'action-sign'}>{'>'}</div>} */}
         </div>
         <div data-cat={'slide-backward'}>
           {action.Code === 30 && <div className={'action-sign'}>{'<'}</div>}
+          {action.Code === 30 && <div className="time-span-line"></div>}
+          {action.Code === 30 && diff_sec > 1 && (
+            <div className={'action-text'}>{diffDisplay}</div>
+          )}
         </div>
         <div data-cat={'engagement'}>{engagementEl}</div>
       </motion.div>
     );
   });
 
+  let session_length = session_end
+    ? dayjs(session_end).diff(session_start)
+    : undefined;
+  let session_length_sec = session_length ? session_length / 1000 : undefined;
+
+  let timlineScalebarEls = null;
+  if (session_length) {
+    // console.log(session_length);
+    let scaleBarDivs = parseInt(session_length / 10000) + 1;
+    timlineScalebarEls = [...Array(scaleBarDivs)].map((i, index) => (
+      <div key={index} style={{ width: 10000 * widthAdjustUnit }}>
+        <div>{`${parseInt((index * 10000) / 60000)}:${parseInt(
+          (index * 10) % 60
+        )}`}</div>
+      </div>
+    ));
+    timlineScalebarEls.push(
+      <div key={scaleBarDivs + 1} style={{ width: '10px' }}>
+        <div>{`${parseInt((scaleBarDivs * 10000) / 60000)}:${parseInt(
+          (scaleBarDivs * 10) % 60
+        )}`}</div>
+      </div>
+    );
+  }
   // =====  ==========
 
   return (
@@ -334,6 +357,7 @@ const UserBehaviorGraph = (props) => {
       <div className={'body'}>
         <div className="_grid-2row">
           <div className="timeline-row">{actionItemsEl}</div>
+          <div className="timeline-row scalebar">{timlineScalebarEls}</div>
         </div>
       </div>
     </div>
