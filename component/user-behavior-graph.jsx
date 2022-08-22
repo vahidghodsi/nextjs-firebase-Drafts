@@ -169,8 +169,9 @@ const UserBehaviorGraph = (props) => {
   const actionCodesNavigation = [10, 15, 20, 21, 30, 31];
   const actionCodesEngagement = [50, 51, 55, 60, 65, 70, 75];
 
+  if (actions[0].Code) actions.forEach((action) => (action.code = action.Code));
   const actionsNavigation = actions.filter((action) =>
-    actionCodesNavigation.includes(action.Code)
+    actionCodesNavigation.includes(action.code)
   );
   // const session_start = actions[0].created_at;
   const session_start =
@@ -201,8 +202,8 @@ const UserBehaviorGraph = (props) => {
 
   const actionCols = [];
   actions.forEach((action) => {
-    if (actionCodesNavigation.includes(action.Code)) actionCols.push(action);
-    if (actionCodesEngagement.includes(action.Code)) {
+    if (actionCodesNavigation.includes(action.code)) actionCols.push(action);
+    if (actionCodesEngagement.includes(action.code)) {
       if (actionCols[actionCols.length - 1].engagement) {
         actionCols[actionCols.length - 1].engagement.push(action);
       } else {
@@ -299,24 +300,24 @@ const UserBehaviorGraph = (props) => {
         className={'behavior-action'}
         style={{ width: itemWidth }}
         whileHover={{ y: 0 }}
-        data-action-code={action.Code}
+        data-action-code={action.code}
       >
         <div data-cat={'info'}></div>
         <div data-cat={'time'}>{atDisplay}</div>
         {/* <div data-cat={'time-diff'}>{diff_sec > 1 && diffDisplay}</div> */}
         <div data-cat={'presentation'}></div>
         <div data-cat={'slide-forward'}>
-          {action.Code === 20 && <div className={'action-sign'}>{'>'}</div>}
-          {action.Code === 20 && <div className="time-span-line"></div>}
-          {action.Code === 20 && diff_sec > 1 && (
+          {action.code === 20 && <div className={'action-sign'}>{'>'}</div>}
+          {action.code === 20 && <div className="time-span-line"></div>}
+          {action.code === 20 && diff_sec > 1 && (
             <div className={'action-text'}>{diffDisplay}</div>
           )}
-          {/* {action.Code === 20 && <div className={'action-sign'}>{'>'}</div>} */}
+          {/* {action.code === 20 && <div className={'action-sign'}>{'>'}</div>} */}
         </div>
         <div data-cat={'slide-backward'}>
-          {action.Code === 30 && <div className={'action-sign'}>{'<'}</div>}
-          {action.Code === 30 && <div className="time-span-line"></div>}
-          {action.Code === 30 && diff_sec > 1 && (
+          {action.code === 30 && <div className={'action-sign'}>{'<'}</div>}
+          {action.code === 30 && <div className="time-span-line"></div>}
+          {action.code === 30 && diff_sec > 1 && (
             <div className={'action-text'}>{diffDisplay}</div>
           )}
         </div>
