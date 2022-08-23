@@ -10,24 +10,19 @@ import styles, {
   sessionCardInfoVariant,
 } from './pitch-session-card-style';
 
-const PitchSessionCard = (props) => {
-  //   console.log('[PitchSessionCard:]', props);
-  const sessions = props.items || [];
+const PitchSessionFeedbackCard = (props) => {
+  //   console.log('[PitchSessionFeedbackCard:]', props);
+  const feedback = props.feedback;
   // console.log(sessions);
-  const session = props.session;
-  //  const isActive = props.currentSession && session.id === props.currentSession.id;
+
   const isActive = props.active;
-  // if (isActive) console.log(session);s
-  const behavior = session.behavior;
-  const feedbacks = session.feedbacks;
 
   let mainCls = [
     [true, '_pitch-session-card'],
     [true, '_grid-2row-fix-top'],
     [isActive, 'active'],
     // [!isActive, '_gap-0'],
-    [!behavior, 'no-content'],
-    [behavior && behavior.length > 1, 'valid-data'],
+
     [props.className, props.className],
     [props.disabled, 'disabled'],
     // [props.secondary, 'secondary'],
@@ -39,10 +34,10 @@ const PitchSessionCard = (props) => {
     .map((classCondition) => (classCondition[0] ? classCondition[1] : null))
     .filter((cls) => cls);
 
-  const sessionDate = session.created_at
-    ? dayjs(session.created_at).format('DD MMM YY')
+  const feedbackDate = feedback.created_at
+    ? dayjs(feedback.created_at).format('DD MMM YY')
     : '---';
-  // console.log(sessionDate);
+  // console.log(feedbackDate);
 
   return (
     <motion.div
@@ -54,20 +49,18 @@ const PitchSessionCard = (props) => {
       // layout
       initial={'initial'}
       animate={'animate'}
-      onClick={() => props.setCurrentSession(session.id)}
+      onClick={() => props.setCurrentFeedback(feedback)}
     >
       <div className="session-info">
         <div className="_grid-2col-fix-right">
-          <div className="session-user">{session.user_id}</div>
-          <div className="session-date">{sessionDate}</div>
-        </div>
-        <div> {session.id}</div>
-        <div className="_grid-3col-fix-middle-right">
-          <div className="_bold">{behavior?.length}</div>
-          <div></div>
-          <div>(Feedback: {feedbacks?.length})</div>
+          <div className="session-user">{feedback.type}</div>
+          {/* <div className="session-date">{feedbackDate}</div> */}
+          <div className="session-date">
+            {feedback.slide} / {feedback.stage}
+          </div>
         </div>
       </div>
+      {feedback.content && <div>{feedback.content}</div>}
       {/* <AnimatePresence>
         {isActive && (
           <motion.div
@@ -81,7 +74,7 @@ const PitchSessionCard = (props) => {
               behavior items : <span>{behavior?.length}</span>
             </div>
             <div className="_grid-2col-fix-right">
-              feedback : <span>{feedbacks?.length}</span>
+              feedback : <span>{feedback?.length}</span>
             </div>
           </motion.div>
         )}
@@ -90,4 +83,4 @@ const PitchSessionCard = (props) => {
   );
 };
 
-export default PitchSessionCard;
+export default PitchSessionFeedbackCard;

@@ -169,7 +169,7 @@ const UserBehaviorGraph = (props) => {
   const actionCodesNavigation = [10, 15, 20, 21, 30, 31];
   const actionCodesEngagement = [50, 51, 55, 60, 65, 70, 75];
 
-  if (actions[0].Code) actions.forEach((action) => (action.code = action.Code));
+  // if (actions[0].Code) actions.forEach((action) => (action.code = action.Code));
   const actionsNavigation = actions.filter((action) =>
     actionCodesNavigation.includes(action.code)
   );
@@ -267,19 +267,24 @@ const UserBehaviorGraph = (props) => {
           // );
         }
 
+        let isSelected =
+          props.currentFeedback &&
+          props.currentFeedback.created_at === engag.created_at;
+
         return (
           <div
             style={{ width: engag_diff_millisec * widthAdjustUnit }}
             key={engag.created_at}
             data-cat={'engagement-item'}
+            className={isSelected ? 'selected' : null}
           >
-            {engag.Code === 50 && <div className={'action-sign'}>{'+'}</div>}
-            {engag.Code === 51 && <div className={'action-sign'}>{'*'}</div>}
-            {engag.Code === 55 && <div className={'action-sign'}>{'-'}</div>}
-            {engag.Code === 60 && <div className={'action-sign'}>{'@'}</div>}
-            {engag.Code === 65 && <div className={'action-sign'}>{'-@'}</div>}
-            {engag.Code === 70 && <div className={'action-sign'}>{'%'}</div>}
-            {engag.Code === 75 && <div className={'action-sign'}>{'-%'}</div>}
+            {engag.code === 50 && <div className={'action-sign'}>{'+'}</div>}
+            {engag.code === 51 && <div className={'action-sign'}>{'*'}</div>}
+            {engag.code === 55 && <div className={'action-sign'}>{'-'}</div>}
+            {engag.code === 60 && <div className={'action-sign'}>{'@'}</div>}
+            {engag.code === 65 && <div className={'action-sign'}>{'-@'}</div>}
+            {engag.code === 70 && <div className={'action-sign'}>{'%'}</div>}
+            {engag.code === 75 && <div className={'action-sign'}>{'-%'}</div>}
           </div>
         );
       });
@@ -294,6 +299,11 @@ const UserBehaviorGraph = (props) => {
     }
     // console.log(engagementEl);
 
+    let isCurrentStage = props.currentSlide === action.slide;
+    let isCurretnSlide = props.currentStage === action.stage;
+    let cls = 'behavior-action';
+    if (isCurrentStage) cls += ' current-slide';
+    if (isCurrentStage) cls += ' current-stage';
     return (
       <motion.div
         key={action.created_at}
@@ -302,7 +312,14 @@ const UserBehaviorGraph = (props) => {
         whileHover={{ y: 0 }}
         data-action-code={action.code}
       >
-        <div data-cat={'info'}></div>
+        <div data-cat={'info'}>
+          <div>
+            {action.slide > 0 && action.slide != array[index - 1].slide && (
+              <div>{action.slide}</div>
+            )}
+          </div>
+          <div>{action.stage}</div>
+        </div>
         <div data-cat={'time'}>{atDisplay}</div>
         {/* <div data-cat={'time-diff'}>{diff_sec > 1 && diffDisplay}</div> */}
         <div data-cat={'presentation'}></div>

@@ -29,6 +29,7 @@ const styles = css({
             fontWeight: 'bold',
             fontSize: '16px',
           },
+
           '.action-text': {
             display: 'inline',
             position: 'relative',
@@ -75,6 +76,15 @@ const styles = css({
       display: 'flex',
       '> div': {
         height: '100%',
+        '&.selected': {
+          // background: 'red',
+          '.action-sign': {
+            color: 'var(--color-info)',
+            left: '-8px',
+            top: '-4px',
+            fontSize: '24px',
+          },
+        },
       },
     },
     '.behavior-action > div[data-cat=slide-backward]': {
@@ -105,6 +115,11 @@ const styles = css({
     },
     '.behavior-action > div[data-cat=info]': {
       // background: 'cyan',
+      fontSize: '10px',
+      // textAlign: 'center',
+      ' > div:first-of-type': {
+        height: '16px',
+      },
     },
 
     '.behavior-action:hover': {
@@ -114,6 +129,23 @@ const styles = css({
       boxShadow: 'var(--shadow-primary)',
       borderRadius: '5px',
       zIndex: '50',
+      ' > div[data-cat=time]': {
+        // position: 'relative',
+        // top: '-20px',
+        opacity: '1',
+
+        // background: 'yellow',
+      },
+    },
+
+    '.behavior-action.selected': {
+      // width: '100px !important',
+      // background: 'var(--color-light)',
+      // border: 'var(--border-primary)',
+      // boxShadow: 'var(--shadow-primary)',
+      border: 'var(--border-primary)',
+      borderRadius: '5px',
+      zIndex: '100',
       ' > div[data-cat=time]': {
         // position: 'relative',
         // top: '-20px',
