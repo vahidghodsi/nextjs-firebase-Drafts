@@ -44,6 +44,7 @@ const sessionSlideStageGenerator = (session, slidesLayout) => {
     });
     // console.log(session);
   }
+
   return session;
   // NEXT_TOOLSET: 21,
   // PREV: 30,
@@ -65,9 +66,18 @@ const BehaviorContent = () => {
   useEffect(() => {
     firebaseSessions
       .getSessions()
-      .then((res) =>
-        setSessions(res.map((session) => sessionSlideStageGenerator(session)))
-      )
+      .then((res) => {
+        let tempSessions = res
+          .filter((session) => session.created_at)
+          .map((session) => sessionSlideStageGenerator(session));
+
+        setSessions(
+          tempSessions.sort(
+            (sessionA, sessionB) => sessionB.created_at - sessionA.created_at
+          )
+        );
+      })
+
       .catch((err) => console.log(err));
   }, []);
 
@@ -77,6 +87,17 @@ const BehaviorContent = () => {
   //       sessions.map((session) => sessionSlideStageGenerator(session))
   //     );
   // }, []);
+
+  // useEffect(() => {
+  //   if (sessions) {
+  //     let tempSessions = sessions.sort(
+  //       (sessionA, sessionB) => sessionA.created_at - sessionB.created_at
+  //     );
+  //     console.log(tempSessions);
+  //     setSessions(tempSessions);
+  //   }
+  //   // [sessions, setSessions]
+  // }, [sessions]);
 
   useEffect(() => {
     if (currentSession && currentSession.feedbacks)
@@ -198,8 +219,8 @@ const BehaviorContent = () => {
                       border: 'var(--border-primary)',
                       borderRadius: '5px',
                       fontSize: '24px',
-                      left: currentFeedback.position.y,
-                      top: currentFeedback.position.x,
+                      left: currentFeedback.position.x,
+                      top: currentFeedback.position.y,
                     }}
                   >
                     {currentFeedback.content}
