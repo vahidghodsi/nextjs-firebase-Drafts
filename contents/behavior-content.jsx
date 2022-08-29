@@ -67,9 +67,9 @@ const BehaviorContent = () => {
     firebaseSessions
       .getSessions()
       .then((res) => {
-        let tempSessions = res
-          .filter((session) => session.created_at)
-          .map((session) => sessionSlideStageGenerator(session));
+        let tempSessions = res.filter((session) => session.created_at);
+        // .filter((session) => session.created_at > 1661465000000);
+        // .map((session) => sessionSlideStageGenerator(session));
 
         setSessions(
           tempSessions.sort(
@@ -102,6 +102,7 @@ const BehaviorContent = () => {
   useEffect(() => {
     if (currentSession && currentSession.feedbacks)
       setCurrentFeedback(currentSession.feedbacks[0]?.created_at);
+    console.log(currentSession);
   }, [currentSession]);
 
   return (

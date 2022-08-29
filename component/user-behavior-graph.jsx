@@ -162,7 +162,7 @@ const UserBehaviorGraph = (props) => {
   //   console.log('[UserBehaviorGraph:]', props);
   const [hovered, setHovered] = useState(false);
   const session = props.session ? cloneObject(props.session) : sampleSession;
-
+  const [currentBehaviorItem, setCurrentBehaviorItem] = useState(undefined);
   // const actions = props.actions || [1, 2, 3];
   const actions = session.behavior || [];
 
@@ -173,12 +173,12 @@ const UserBehaviorGraph = (props) => {
   const actionsNavigation = actions.filter((action) =>
     actionCodesNavigation.includes(action.code)
   );
-  // const session_start = actions[0].created_at;
+  // const session_start = actions[0].timestamp;
   const session_start =
-    actions.length > 0 ? dayjs(actions[0].created_at) : undefined;
+    actions.length > 0 ? dayjs(actions[0].timestamp) : undefined;
   const session_end =
     actions.length > 0
-      ? dayjs(actions[actions.length - 1].created_at)
+      ? dayjs(actions[actions.length - 1].timestamp)
       : undefined;
   // console.log(session_end);
 
@@ -213,8 +213,8 @@ const UserBehaviorGraph = (props) => {
   });
 
   const actionItemsEl = actionCols.map((action, index, array) => {
-    let at_sec = dayjs(action.created_at).diff(session_start, 'seconds');
-    let at_min = dayjs(action.created_at).diff(session_start, 'minutes');
+    let at_sec = dayjs(action.timestamp).diff(session_start, 'seconds');
+    let at_min = dayjs(action.timestamp).diff(session_start, 'minutes');
     let atDisplay = `${at_min}:${at_sec % 60}`;
     // console.log(at_min, ':', at_sec % 60);
 
@@ -222,15 +222,15 @@ const UserBehaviorGraph = (props) => {
     let diff_sec = 0;
     let diff_min = 0;
     if (array[index + 1]) {
-      diff_millisec = dayjs(array[index + 1].created_at).diff(
-        dayjs(action.created_at)
+      diff_millisec = dayjs(array[index + 1].timestamp).diff(
+        dayjs(action.timestamp)
       );
-      diff_sec = dayjs(array[index + 1].created_at).diff(
-        dayjs(action.created_at),
+      diff_sec = dayjs(array[index + 1].timestamp).diff(
+        dayjs(action.timestamp),
         'seconds'
       );
-      diff_min = dayjs(array[index + 1].created_at).diff(
-        dayjs(action.created_at),
+      diff_min = dayjs(array[index + 1].timestamp).diff(
+        dayjs(action.timestamp),
         'minutes'
       );
     }
@@ -238,11 +238,8 @@ const UserBehaviorGraph = (props) => {
       diff_sec < 60 ? `${diff_sec}` : `${diff_min}:${diff_sec % 60}`;
     // console.log(diff_sec);
 
-    // let itemWidth = diff_sec < 60 ? diff_sec * 5 : 240;
-
     let itemWidth = diff_millisec * widthAdjustUnit;
-
-    // **** code is in capital C , change it to small letter *****
+    // console.log(array);
 
     let engagementEl = null;
     if (action.engagement) {
@@ -254,27 +251,27 @@ const UserBehaviorGraph = (props) => {
         // let engag_diff_min = 0;
 
         if (array[index + 1]) {
-          engag_diff_millisec = dayjs(array[index + 1].created_at).diff(
-            dayjs(engag.created_at)
+          engag_diff_millisec = dayjs(array[index + 1].timestamp).diff(
+            dayjs(engag.timestamp)
           );
-          // engag_diff_sec = dayjs(array[index + 1].created_at).diff(
-          //   dayjs(engag.created_at),
+          // engag_diff_sec = dayjs(array[index + 1].timestamp).diff(
+          //   dayjs(engag.timestamp),
           //   'seconds'
           // );
-          // engag_diff_min = dayjs(array[index + 1].created_at).diff(
-          //   dayjs(engag.created_at),
+          // engag_diff_min = dayjs(array[index + 1].timestamp).diff(
+          //   dayjs(engag.timestamp),
           //   'minutes'
           // );
         }
 
         let isSelected =
           props.currentFeedback &&
-          props.currentFeedback.created_at === engag.created_at;
+          props.currentFeedback.timestamp === engag.timestamp;
 
         return (
           <div
             style={{ width: engag_diff_millisec * widthAdjustUnit }}
-            key={engag.created_at}
+            key={engag.timestamp}
             data-cat={'engagement-item'}
             className={isSelected ? 'selected' : null}
           >
@@ -289,8 +286,8 @@ const UserBehaviorGraph = (props) => {
         );
       });
 
-      let firstEngagementOffset = dayjs(action.engagement[0].created_at).diff(
-        dayjs(action.created_at)
+      let firstEngagementOffset = dayjs(action.engagement[0].timestamp).diff(
+        dayjs(action.timestamp)
       );
       // console.log(firstEngagementOffset);
       engagementEl.unshift(
@@ -304,29 +301,48 @@ const UserBehaviorGraph = (props) => {
     let cls = 'behavior-action';
     if (isCurrentStage) cls += ' current-slide';
     if (isCurrentStage) cls += ' current-stage';
+    if (currentBehaviorItem === action.timestamp) cls += ' selected';
+
     return (
       <motion.div
-        key={action.created_at}
-        className={'behavior-action'}
+        key={action.timestamp}
+        className={cls}
         style={{ width: itemWidth }}
         whileHover={{ y: 0 }}
+        data-action-slide={action.slide}
         data-action-code={action.code}
+        onClick={() => setCurrentBehaviorItem(action.timestamp)}
       >
         <div data-cat={'info'}>
-          <div>
-            {action.slide > 0 && action.slide != array[index - 1].slide && (
+          <div className={'slide-no _relative'}>
+            <div
+              style={{
+                position: 'absolute',
+                height: '8px',
+                width: 'calc(100% - 4px)',
+                left: '4px',
+                borderBottom: '1px dashed var(--color-secondary)',
+              }}
+            ></div>
+            {action.slide > 0 && action.slide != array[index - 1]?.slide && (
               <div>{action.slide}</div>
             )}
           </div>
-          <div>{action.stage}</div>
+          <div className={'stage-no'}>{action.stage}</div>
         </div>
         <div data-cat={'time'}>{atDisplay}</div>
         {/* <div data-cat={'time-diff'}>{diff_sec > 1 && diffDisplay}</div> */}
-        <div data-cat={'presentation'}></div>
+        <div data-cat={'presentation'}>
+          {action.code === 10 && <div className={'action-sign'}>{'ENTER'}</div>}
+          {action.code === 15 && <div className={'action-sign'}>{'^'}</div>}
+        </div>
         <div data-cat={'slide-forward'}>
           {action.code === 20 && <div className={'action-sign'}>{'>'}</div>}
-          {action.code === 20 && <div className="time-span-line"></div>}
-          {action.code === 20 && diff_sec > 1 && (
+          {action.code === 40 && <div className={'action-sign'}>{')'}</div>}
+          {[20, 21, 40].includes(action.code) && (
+            <div className="time-span-line"></div>
+          )}
+          {[20, 21, 40].includes(action.code) && diff_sec > 1 && (
             <div className={'action-text'}>{diffDisplay}</div>
           )}
           {/* {action.code === 20 && <div className={'action-sign'}>{'>'}</div>} */}
@@ -368,13 +384,53 @@ const UserBehaviorGraph = (props) => {
     );
   }
   // =====  ==========
+  let dividedActionEls = [];
+
+  actionItemsEl.forEach((el, index, array) => {
+    let el_slide = el.props['data-action-slide'];
+    let prev_el_slide = array[index - 1]?.props['data-action-slide'];
+
+    // if (!dividedActionEls[el_slide]) {
+    //   dividedActionEls[el_slide] = [];
+    // }
+    // dividedActionEls[el_slide].push(el);
+    if (index > 0 && el_slide === prev_el_slide) {
+      dividedActionEls[dividedActionEls.length - 1].push(el);
+    } else {
+      dividedActionEls.push([el]);
+    }
+  });
+
+  // console.log(
+  //   dividedActionEls.map((i) => i.map((el) => el.props['data-action-slide']))
+  // );
+  // console.log(currentBehaviorItem);
+
+  dividedActionEls = dividedActionEls.map((devision, index) => {
+    // let isSelected = actions[currentBehaviorItem]?.slide === index;
+    let isSelected = devision.some((el) => el.key == currentBehaviorItem);
+    // console.log(devision);
+
+    return (
+      <div
+        className={
+          isSelected
+            ? 'timeline-row-devision selected'
+            : 'timeline-row-devision'
+        }
+      >
+        {devision}
+      </div>
+    );
+  });
 
   return (
     <div className={mainCls.join(' ')} css={[styles, { ...props.style }]}>
       <div className={'context'}></div>
       <div className={'body'}>
         <div className="_grid-2row">
-          <div className="timeline-row">{actionItemsEl}</div>
+          {/* <div className="timeline-row">{actionItemsEl}</div> */}
+          <div className="timeline-row">{dividedActionEls}</div>
           <div className="timeline-row scalebar">{timlineScalebarEls}</div>
         </div>
       </div>
