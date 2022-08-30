@@ -68,7 +68,10 @@ const HomeContent = () => {
         />
       </div> */}
       <div style={{ display: 'flex' }}>
-        <Link href="./behavior"> '= To User Behavior Graph ='</Link>
+        <Link href="./behavior">{' >> To User Behavior Graph '}</Link>
+      </div>
+      <div style={{ display: 'flex' }}>
+        <Link href="./short-pitch">{' >> To Short Pitch '}</Link>
       </div>
       <div></div>
     </div>
