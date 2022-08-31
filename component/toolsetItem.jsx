@@ -11,6 +11,7 @@ const ToolsetItem = (props) => {
   const altText = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [rtl, setRtl] = useState(props.rtl || false);
+  const [active, setActive] = useState(false);
 
   let mainCls = [
     [true, '_toolset-item'],
@@ -28,6 +29,8 @@ const ToolsetItem = (props) => {
 
   useEffect(() => {
     if (hovered && altText.current) {
+      console.log(hovered);
+      console.log(active);
       // console.log(altText.current);
       let altTextBound = altText.current.getBoundingClientRect();
       console.log(altTextBound);
@@ -55,6 +58,15 @@ const ToolsetItem = (props) => {
       //   window.innerWidth - altTextBound.width + altTextBound.left
       // );
     }
+
+    if (hovered) {
+      setActive(true);
+      setTimeout(() => {
+        setActive(false);
+      }, 4000);
+    } else {
+      setActive(false);
+    }
   }, [altText, hovered]);
 
   return (
@@ -75,7 +87,8 @@ const ToolsetItem = (props) => {
     >
       <div className="icon">{props.icon || 'X'}</div>
       <AnimatePresence>
-        {props.children && hovered && (
+        {/* {props.children && hovered && ( */}
+        {props.children && active && (
           <motion.div
             className="alt-text"
             ref={altText}

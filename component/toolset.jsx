@@ -33,16 +33,16 @@ const Toolset = (props) => {
       <ToolsetItem icon={'C'}>
         {'add a comment on the slide ( press C )'}
       </ToolsetItem>
-      <ToolsetItem icon={'X'}>{'like the slide ( press L )'}</ToolsetItem>
-      <ToolsetItem icon={'Y'}>{'dis-like the slide ( press K )'}</ToolsetItem>
+      {/* <ToolsetItem icon={'X'}>{'like the slide ( press L )'}</ToolsetItem> */}
+      {/* <ToolsetItem icon={'Y'}>{'dis-like the slide ( press K )'}</ToolsetItem> */}
       <ToolsetItem icon={'Z'} rtl>
         {'another tool, whatever it is ( press nothing )'}
       </ToolsetItem>
-      <ToolsetItem icon={'N'} rtl>
+      {/* <ToolsetItem icon={'N'} rtl>
         nice!, just random bullshit. another tool, whatever it is ( press
         nothing ). another tool, whatever it is ( press nothing ).another tool,
         whatever it is ( press nothing )
-      </ToolsetItem>
+      </ToolsetItem> */}
       <ToolsetItem icon={'N'} rtl>
         <div>
           <div>
@@ -67,7 +67,7 @@ const Toolset = (props) => {
           </div>
         </div>
       </ToolsetItem>
-      <ToolsetItem icon={'Z'}></ToolsetItem>
+      {/* <ToolsetItem icon={'Z'}></ToolsetItem> */}
       {/* </div> */}
     </div>
   );

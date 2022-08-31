@@ -201,13 +201,17 @@ const UserBehaviorGraph = (props) => {
   const widthAdjustUnit = 8 / 1000;
 
   const actionCols = [];
-  actions.forEach((action) => {
-    if (actionCodesNavigation.includes(action.code)) actionCols.push(action);
-    if (actionCodesEngagement.includes(action.code)) {
-      if (actionCols[actionCols.length - 1].engagement) {
-        actionCols[actionCols.length - 1].engagement.push(action);
-      } else {
-        actionCols[actionCols.length - 1].engagement = [action];
+  actions.forEach((action, index) => {
+    if (index === 0) {
+      actionCols.push(action);
+    } else {
+      if (actionCodesNavigation.includes(action.code)) actionCols.push(action);
+      if (actionCodesEngagement.includes(action.code)) {
+        if (actionCols[actionCols.length - 1].engagement) {
+          actionCols[actionCols.length - 1].engagement.push(action);
+        } else {
+          actionCols[actionCols.length - 1].engagement = [action];
+        }
       }
     }
   });

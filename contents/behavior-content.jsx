@@ -4,6 +4,9 @@ import dayjs from 'dayjs';
 
 // import styles from '../styles/HomeContent.module.css';
 import UserBehaviorGraph from '../component/user-behavior-graph';
+import { auth } from '../services/firebase-app';
+
+import { firebaseUserService } from '../services/user';
 import { firebaseSessions } from '../services/pitch-sessions';
 import PitchSessions from '../component/pitch-sessions';
 import PitchSessionFeedbackCard from '../component/pitchSessionFeedbackCard';
@@ -62,23 +65,40 @@ const BehaviorContent = () => {
   // console.log(currentSession);
 
   const [testVal, setTestVal] = useState(false);
+  const slidePreviewFrame = { width: 1000, height: 500, scaleRatio: 0.4 };
 
   useEffect(() => {
-    firebaseSessions
-      .getSessions()
-      .then((res) => {
-        let tempSessions = res.filter((session) => session.created_at);
-        // .filter((session) => session.created_at > 1661465000000);
-        // .map((session) => sessionSlideStageGenerator(session));
+    // ===== SESSION REGISTRATION
+    const getSessionCallback = () => {
+      firebaseSessions
+        .getSessions()
+        .then((res) => {
+          let tempSessions = res.filter((session) => session.created_at);
+          // .filter((session) => session.created_at > 1661465000000);
+          // .map((session) => sessionSlideStageGenerator(session));
 
-        setSessions(
-          tempSessions.sort(
-            (sessionA, sessionB) => sessionB.created_at - sessionA.created_at
-          )
-        );
-      })
+          setSessions(
+            tempSessions.sort(
+              (sessionA, sessionB) => sessionB.created_at - sessionA.created_at
+            )
+          );
+        })
+        .catch((err) => console.log(err));
+    };
 
-      .catch((err) => console.log(err));
+    // ** the auth does not remain, from getServerSideProps. must signin once again here
+    // console.log(auth.currentUser);
+    if (!auth.currentUser) {
+      firebaseUserService
+        .userSignInAnonymously()
+        .then(() => {
+          getSessionCallback();
+        })
+        .catch((err) => console.log(err));
+    } else {
+      getSessionCallback();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // useEffect(() => {
@@ -182,14 +202,14 @@ const BehaviorContent = () => {
         >
           <div
             style={{
-              transform: 'scale(.4)',
+              transform: `scale(${slidePreviewFrame.scaleRatio})`,
             }}
           >
             <div
               style={{
                 position: 'relative',
-                height: '500px',
-                width: '1000px',
+                height: `${slidePreviewFrame.height}px`,
+                width: `${slidePreviewFrame.width}px`,
                 border: 'var(--border-secondary)',
               }}
             >
@@ -197,16 +217,24 @@ const BehaviorContent = () => {
                 <div
                   style={{
                     position: 'absolute',
-                    left: currentFeedback.position.y,
-                    top: currentFeedback.position.x,
+                    left:
+                      (currentFeedback.position.x /
+                        currentFeedback.position.slide_width) *
+                      slidePreviewFrame.width,
+                    top:
+                      (currentFeedback.position.y /
+                        currentFeedback.position.slide_height) *
+                      slidePreviewFrame.height,
                   }}
                   className="_grid-2row-fix-top"
                 >
                   <div
                     style={{
-                      // position: 'absolute',
+                      position: 'relative',
                       height: '16px',
                       width: '16px',
+                      top: '-8px',
+                      left: '-8px',
                       background: 'var(--color-primary)',
                       borderRadius: '50%',
                     }}
@@ -220,8 +248,8 @@ const BehaviorContent = () => {
                       border: 'var(--border-primary)',
                       borderRadius: '5px',
                       fontSize: '24px',
-                      left: currentFeedback.position.x,
-                      top: currentFeedback.position.y,
+                      // left: currentFeedback.position.x,
+                      // top: currentFeedback.position.y,
                     }}
                   >
                     {currentFeedback.content}
