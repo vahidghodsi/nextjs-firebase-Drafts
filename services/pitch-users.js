@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 
 // const usersDb = firestore.collection(db, '/users');
-const usersDb = collection(db, 'pitch-users');
+const usersDb = collection(db, 'pitch_users');
 console.log(usersDb);
 
 export const getUser = async (username) => {

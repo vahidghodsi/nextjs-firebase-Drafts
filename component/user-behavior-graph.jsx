@@ -339,6 +339,12 @@ const UserBehaviorGraph = (props) => {
         <div data-cat={'presentation'}>
           {action.code === 10 && <div className={'action-sign'}>{'ENTER'}</div>}
           {action.code === 15 && <div className={'action-sign'}>{'^'}</div>}
+          {action.code === 110 && (
+            <div className={'action-sign'}>{'short-pitch'}</div>
+          )}
+          {action.code === 115 && (
+            <div className={'action-sign'}>{'^ short-pitch'}</div>
+          )}
         </div>
         <div data-cat={'slide-forward'}>
           {action.code === 20 && <div className={'action-sign'}>{'>'}</div>}

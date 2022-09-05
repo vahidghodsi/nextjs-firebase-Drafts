@@ -1,7 +1,7 @@
 import { db } from './firebase-app';
 import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
 
-const sessionDb = collection(db, 'pitch-sessions');
+const sessionDb = collection(db, 'pitch_sessions');
 
 export const getSession = (uid) => {
   return getDoc(doc(sessionDb, uid)).then((res) => console.log(res.data()));
