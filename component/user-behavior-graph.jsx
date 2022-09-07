@@ -165,9 +165,39 @@ const UserBehaviorGraph = (props) => {
   const [currentBehaviorItem, setCurrentBehaviorItem] = useState(undefined);
   // const actions = props.actions || [1, 2, 3];
   const actions = session.behavior || [];
+  const feedbacks = session.feedbacks || [];
+  const actionsShortPitch = actions.filter((act) => act.code > 100);
+  console.log(actionsShortPitch);
+  const shortPitchSessionLength =
+    actionsShortPitch.length > 1
+      ? // ? actionsShortPitch[1].timestamp - actionsShortPitch[0].timestamp
+        dayjs(actionsShortPitch[1].timestamp).format('DD MMM YY MM:')
+      : 0;
 
   const actionCodesNavigation = [10, 15, 20, 21, 30, 31];
   const actionCodesEngagement = [50, 51, 55, 60, 65, 70, 75];
+
+  const sessionDate = session.created_at
+    ? dayjs(session.created_at).format('DD MMM YY')
+    : '---';
+
+  // const sessionLength =
+  //     if (array[index + 1]) {
+  //       diff_millisec = dayjs(array[index + 1].timestamp).diff(
+  //         dayjs(action.timestamp)
+  //       );
+  //       diff_sec = dayjs(array[index + 1].timestamp).diff(
+  //         dayjs(action.timestamp),
+  //         'seconds'
+  //       );
+  //       diff_min = dayjs(array[index + 1].timestamp).diff(
+  //         dayjs(action.timestamp),
+  //         'minutes'
+  //       );
+  //     }
+  //     let diffDisplay =
+  //       diff_sec < 60 ? `${diff_sec}` : `${diff_min}:${diff_sec % 60}`;
+  //     // console.log(diff_sec);
 
   // if (actions[0].Code) actions.forEach((action) => (action.code = action.Code));
   const actionsNavigation = actions.filter((action) =>
@@ -436,7 +466,28 @@ const UserBehaviorGraph = (props) => {
 
   return (
     <div className={mainCls.join(' ')} css={[styles, { ...props.style }]}>
-      <div className={'context'}></div>
+      <div className={'context'}>
+        <div className="_grid-3col-fix-left">
+          <div className="session-user">{session.user_id}</div>
+          <div className="session-date">{sessionDate}</div>
+          <div> {session.id}</div>
+        </div>
+        <div className="_grid-2col-fix-left">
+          <div> length</div>
+          <div> length</div>
+        </div>
+        <div className="_grid-2col-fix-left">
+          <div> short pitch length</div>
+          <div> {shortPitchSessionLength}</div>
+        </div>
+        <div className="_grid-2col-fix-left">
+          <div className="_bold">Recorded Actions: {actions.length}</div>
+          {/* <div></div> */}
+          <div>
+            (Feedback: <span className="_bold">{feedbacks.length} </span>)
+          </div>
+        </div>
+      </div>
       <div className={'body'}>
         <div className="_grid-2row">
           {/* <div className="timeline-row">{actionItemsEl}</div> */}

@@ -126,7 +126,7 @@ const BehaviorContent = () => {
   }, [currentSession]);
 
   return (
-    <div className="_grid-2row-fix-top">
+    <div className="_grid-3row-fix-top-middle _H-fit">
       {/* <div>
         <motion.div
           style={{ height: '20px', width: '20px' }}
@@ -163,14 +163,14 @@ const BehaviorContent = () => {
       </div>
 
       <div
-        style={{ overflow: 'hidden', padding: '8px' }}
+        style={{ height: '100%', overflow: 'hidden', padding: '8px' }}
         className="_grid-2col-fix-left"
       >
-        <div>
-          <div className="_grid-2col-fix-left">
-            <div style={{ width: '200px' }}></div>
-          </div>
-          <div className="_grid-row _gap-8">
+        <div style={{ height: '100%', padding: '8px', overflow: 'hidden' }}>
+          <div
+            className="_grid-row _gap-8"
+            style={{ height: '100%', overflow: 'scroll', padding: '8px' }}
+          >
             {currentSession &&
               currentSession.feedbacks &&
               currentSession.feedbacks.map((feedback) => (
@@ -185,77 +185,110 @@ const BehaviorContent = () => {
                 />
               ))}
           </div>
-          <div className="_grid-2col-fix-left"></div>
         </div>
 
         <div
           style={{
-            height: '300px',
+            height: '350px',
             // width: '600px',
             // minHeight: '250px',
             // maxWidth: '600px',
-            overflow: 'hidden',
+            // overflow: 'hidden',
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'start',
           }}
         >
           <div
             style={{
-              transform: `scale(${slidePreviewFrame.scaleRatio})`,
+              position: 'relative',
+              height: '300px',
+              width:
+                (currentSession?.screen_width / currentSession?.screen_height) *
+                300,
+              // height: '100%',
+              // width: '100%',
+              // height: currentSession.screen_height || '100%',
+              // width: currentSession.screen_width || '100%',
+              // width: '600px',
+              // minHeight: '250px',
+              // maxWidth: '600px',
+              // overflow: 'hidden',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              border: 'var(--border-primary)',
             }}
           >
             <div
               style={{
-                position: 'relative',
-                height: `${slidePreviewFrame.height}px`,
-                width: `${slidePreviewFrame.width}px`,
-                border: 'var(--border-secondary)',
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                fontSize: '12px',
+                padding: '6px',
               }}
             >
-              {currentFeedback && currentFeedback.type === 'COMMENT' && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    left:
-                      (currentFeedback.position.x /
-                        currentFeedback.position.slide_width) *
-                      slidePreviewFrame.width,
-                    top:
-                      (currentFeedback.position.y /
-                        currentFeedback.position.slide_height) *
-                      slidePreviewFrame.height,
-                  }}
-                  className="_grid-2row-fix-top"
-                >
+              <span>{currentSession?.screen_width}</span> {' * '}
+              <span>{currentSession?.screen_height}</span>
+            </div>
+            <div
+              style={{
+                transform: `scale(${slidePreviewFrame.scaleRatio})`,
+              }}
+            >
+              <div
+                style={{
+                  position: 'relative',
+                  height: `${slidePreviewFrame.height}px`,
+                  width: `${slidePreviewFrame.width}px`,
+                  border: 'var(--border-secondary)',
+                }}
+              >
+                {currentFeedback && currentFeedback.type === 'COMMENT' && (
                   <div
                     style={{
-                      position: 'relative',
-                      height: '16px',
-                      width: '16px',
-                      top: '-8px',
-                      left: '-8px',
-                      background: 'var(--color-primary)',
-                      borderRadius: '50%',
+                      position: 'absolute',
+                      left:
+                        (currentFeedback.position.x /
+                          currentFeedback.position.slide_width) *
+                        slidePreviewFrame.width,
+                      top:
+                        (currentFeedback.position.y /
+                          currentFeedback.position.slide_height) *
+                        slidePreviewFrame.height,
                     }}
-                  ></div>
-                  <div
-                    style={{
-                      // position: 'absolute',
-                      // height: '10px',
-                      // width: '10px',
-                      padding: '12px',
-                      border: 'var(--border-primary)',
-                      borderRadius: '5px',
-                      fontSize: '24px',
-                      // left: currentFeedback.position.x,
-                      // top: currentFeedback.position.y,
-                    }}
+                    className="_grid-2row-fix-top"
                   >
-                    {currentFeedback.content}
+                    <div
+                      style={{
+                        position: 'relative',
+                        height: '16px',
+                        width: '16px',
+                        top: '-8px',
+                        left: '-8px',
+                        background: 'var(--color-primary)',
+                        borderRadius: '50%',
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        // position: 'absolute',
+                        // height: '10px',
+                        // width: '10px',
+                        padding: '12px',
+                        border: 'var(--border-primary)',
+                        borderRadius: '5px',
+                        fontSize: '24px',
+                        // left: currentFeedback.position.x,
+                        // top: currentFeedback.position.y,
+                      }}
+                    >
+                      {currentFeedback.content}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           </div>
         </div>
