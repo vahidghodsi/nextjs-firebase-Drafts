@@ -27,7 +27,7 @@ body {
   height: 100%;
   /* font-size: calc(10px + 2vmin); */
   /* font-size: calc(7px + 2vmin); */
-  font-weight: 200;
+  /* font-weight: 200; */
   color: var(--color-primary);
 }
 
@@ -47,6 +47,8 @@ body {
   max-height: 100vh;
   position: relative;
   /* overflow-x: hidden; */
+  /* 14px */
+  font-size: 0.875rem;
 }
 
 #__next > main {
@@ -116,19 +118,6 @@ img {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.App-dev-tools {
-  padding: 0 10px;
-  font-size: 0.6em;
-  border-top: 2px solid rgb(105, 116, 99);
-  background: rgb(191, 214, 177);
-  transition: all 0.4s ease-in-out 0s;
-}
-.appdevtools__fixed-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 /* ROOT -------------------- */

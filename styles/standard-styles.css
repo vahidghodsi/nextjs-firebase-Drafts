@@ -33,7 +33,7 @@
 ._container {
   /* height: 100%; */
   width: 100%;
-  /* max-width: 1500px; */
+  max-width: 1500px;
   margin: 0 auto;
   /* padding: 5px 20px; */
   padding: 0px 40px;
@@ -151,6 +151,10 @@
   font-weight: bold;
   padding: 20px 12px 0 12px;
   color: var(--color-primary);
+}
+._spacer-20 {
+  min-height: 20px;
+  min-width: 20px;
 }
 ._spacer-40 {
   min-height: 40px;

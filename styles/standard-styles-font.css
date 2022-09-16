@@ -64,3 +64,67 @@
 ._sh-t-secondary-hover:hover {
   text-shadow: var(--text-shadow-secondary);
 }
+
+._f-h1 {
+  /* 80px */
+  font-size: 5rem;
+  font-weight: bold;
+}
+._f-h2 {
+  /* 64px */
+  font-size: 4rem;
+  font-weight: bold;
+}
+._f-h3 {
+  /* 48px */
+  font-size: 3rem;
+  font-weight: bold;
+}
+._f-h4 {
+  /* 32px */
+  font-size: 2rem;
+  font-weight: bold;
+}
+._f-h5 {
+  /* 24px */
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+._f-h6 {
+  /* 20px */
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+._f-subtitle {
+  /* 16px */
+  font-size: 1rem;
+  font-weight: normal;
+}
+._f-subtitle2 {
+  /* 14px */
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+._f-body {
+  /* 16px */
+  font-size: 1rem;
+  font-weight: normal;
+}
+._f-body2 {
+  /* 14px */
+  font-size: 0.875rem;
+  font-weight: normal;
+}
+
+._f-caption {
+  /* 12px */
+  font-size: 0.75rem;
+  font-weight: normal;
+}
+._f-overline {
+  /* 10px */
+  font-size: 0.625rem;
+  font-weight: lighter;
+}
