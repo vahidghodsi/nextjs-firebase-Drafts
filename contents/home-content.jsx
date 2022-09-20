@@ -3,6 +3,7 @@ import InputCheckbox from '../component/input-checkbox';
 import InputSwitch from '../component/input-switch';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import ElementContainer from '../component/element-container';
 
 import styles from '../styles/HomeContent.module.css';
 import Toolset from '../component/toolset';
@@ -22,19 +23,37 @@ const HomeContent = () => {
 
   return (
     <div>
-      <div>
-        {/* <motion.div
-          style={{ height: '20px', width: '20px' }}
-          initial={{ x: 0, opacity: 0 }}
-          animate={{
-            x: 200,
-            opacity: 1,
-            background: 'lightblue',
-            borderRadius: '50%',
-            rotate: '90deg',
-            transition: { duration: 2, type: 'easeInOut' },
-          }}
-        /> */}
+      <div style={{ margin: '32px 0', position: 'relative' }}>
+        <ElementContainer>
+          <div className="_grid-2col-fix-left _align-center">
+            <div className="_circle"></div>
+            <div
+              style={{
+                height: '15px',
+                width: '80px',
+                background: 'var(--color-secondary)',
+                borderRadius: '3px',
+              }}
+            ></div>
+          </div>
+
+          <div
+            style={{
+              height: '15px',
+              width: '320px',
+              background: 'var(--color-secondary)',
+              borderRadius: '3px',
+            }}
+          ></div>
+          <div
+            style={{
+              height: '15px',
+              width: '90px',
+              background: 'var(--color-secondary)',
+              borderRadius: '3px',
+            }}
+          ></div>
+        </ElementContainer>
       </div>
 
       <div>

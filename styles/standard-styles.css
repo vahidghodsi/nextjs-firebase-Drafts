@@ -104,6 +104,10 @@
 ._flex-init {
   flex: 0 0 auto;
 }
+._flex-center-center {
+  display: flex;
+  place-content: center;
+}
 ._flex-start {
   justify-content: flex-start !important;
 }

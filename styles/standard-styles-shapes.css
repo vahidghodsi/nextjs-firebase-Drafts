@@ -1,0 +1,59 @@
+/* CONTAINERS -------------------- */
+._circle-xxl,
+._circle-xl,
+._circle-lg,
+._circle-sm,
+._circle-xs,
+._circle-xxs,
+._circle {
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+._circle-o-xxl,
+._circle-o-xl,
+._circle-o-lg,
+._circle-o-sm,
+._circle-o-xs,
+._circle-o-xxs,
+._circle-o {
+  border: var(--border-secondary);
+  border-radius: 50%;
+  background: var(--color-background);
+}
+
+._circle,
+._circle-o {
+  width: 20px;
+  height: 20px;
+}
+._circle-sm,
+._circle-o-sm {
+  width: 16px;
+  height: 16px;
+}
+._circle-xs,
+._circle-o-xs {
+  width: 12px;
+  height: 12px;
+}
+._circle-xxs,
+._circle-o-xxs {
+  width: 10px;
+  height: 10px;
+}
+._circle-lg,
+._circle-o-lg {
+  width: 24px;
+  height: 24px;
+}
+._circle-xl,
+._circle-o-xl {
+  width: 32px;
+  height: 32px;
+}
+._circle-xxl,
+._circle-o-xxl {
+  width: 48px;
+  height: 48px;
+}
