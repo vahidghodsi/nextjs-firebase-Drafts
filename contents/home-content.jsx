@@ -130,6 +130,9 @@ const HomeContent = () => {
       <div style={{ display: 'flex' }}>
         <Link href="./survey">{' >> To Survey '}</Link>
       </div>
+      <div style={{ display: 'flex' }}>
+        <Link href="./ui/blocks">{' >> To Blocks '}</Link>
+      </div>
     </div>
   );
 };

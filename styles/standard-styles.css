@@ -277,6 +277,10 @@
   color: var(--color-info_hover);
 }
 
+._cursor-pointer {
+  cursor: pointer;
+}
+
 ._date {
   color: var(--color-primary);
   font-size: 12px;

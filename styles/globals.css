@@ -158,6 +158,7 @@ code {
   --color-dev: rgb(255, 179, 0);
   --color-presentation: rgb(113, 165, 183);
 
+  --shadow-none: 0px 0px 0px 0px var(--background);
   --shadow-primary-color: var(--color-middle);
   --shadow-primary: 0px 0px 5px 1px var(--color-middle);
   --text-shadow-primary: 0px 0px 4px var(--color-middle);
