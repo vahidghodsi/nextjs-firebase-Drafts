@@ -133,6 +133,22 @@ const HomeContent = () => {
       <div style={{ display: 'flex' }}>
         <Link href="./ui/blocks">{' >> To Blocks '}</Link>
       </div>
+      <div style={{ display: 'flex' }}>
+        <Link href="./ui/blocks">{' >> To Blocks '}</Link>
+      </div>
+
+      <div
+        style={{
+          margin: '30px 0',
+          height: '0px',
+          width: '800px',
+          borderTop: 'var(--border-primary)',
+        }}
+      ></div>
+
+      <div style={{ display: 'flex' }}>
+        <Link href="./layouts">{' >> To Layouts - 2col-fix-top '}</Link>
+      </div>
     </div>
   );
 };
