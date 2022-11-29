@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/dist/client/link';
 import Layout2RowFixTop from './layout-2row-fix-top';
+import Layout2RowFixTop2 from './layout-2row-fix-top-2';
 import Layout2ColFixLeft from './layout-2col-fix-left';
 
 import styles from '../../styles/HomeContent.module.css';
@@ -33,6 +34,12 @@ const HomeContent = () => {
           onClick={() => setContent(<Layout2RowFixTop />)}
         >
           2col-fix-top
+        </div>
+        <div
+          style={menuItemStyle}
+          onClick={() => setContent(<Layout2RowFixTop2 />)}
+        >
+          2col-fix-top2
         </div>
         <div
           style={menuItemStyle}

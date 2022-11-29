@@ -24,19 +24,20 @@ const Layout2RowFixTop = () => {
   };
 
   const bodyTransition = {
-    duration: '2.4',
+    duration: '1.2',
     type: 'easeOut',
     // opacity: { duration: '1', delay: 0.4 },
   };
 
   let secVariant = {
-    initial: { y: '-100px', height: '0', opacity: 0 },
+    initial: { y: '-150px', height: '0', opacity: 0 },
     animate: {
       y: '0',
       height: 'auto',
       opacity: 1,
       transition: {
-        duration: '1.2',
+        // delay: '0.2',
+        duration: '0.4',
         type: 'easeOut',
         // opacity: { duration: '1', delay: 0.4 },
       },
@@ -53,6 +54,7 @@ const Layout2RowFixTop = () => {
       }}
     >
       <div
+        classNmae="contianer"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -60,65 +62,68 @@ const Layout2RowFixTop = () => {
           height: '100%',
         }}
       >
-        <div classNmae="contianer _grid-2row-fix-top" style={{}}>
-          <div className="head" onClick={() => layoutStateToggle()}>
+        {/* <div classNmae="contianer _grid-2row-fix-top" style={{}}> */}
+        <div className="head" onClick={() => layoutStateToggle()}>
+          <div
+            style={{
+              // height: '100px',
+              // margin: '20px',
+              border: 'var(--border-dev)',
+              borderRadius: '5px',
+            }}
+          >
             <div
               style={{
-                // height: '100px',
+                height: '50px',
                 margin: '20px',
-                border: 'var(--border-dev)',
+                border: 'var(--border-secondary)',
                 borderRadius: '5px',
               }}
             >
-              <div
-                style={{
-                  height: '50px',
-                  margin: '20px',
-                  border: 'var(--border-secondary)',
-                  borderRadius: '5px',
-                }}
-              >
-                2 col fix right
-              </div>
+              2 col fix right
             </div>
           </div>
+        </div>
 
+        <AnimatePresence>
           <motion.div
+            // layout
             classNmae="body"
             variants={bodyVariant}
             initial={'initial'}
             animate={layoutState === 0 ? 'hidden' : 'visible'}
-            tranistion={bodyTransition}
+            transition={bodyTransition}
             style={{
               // margin: '20px',
+              // flexGrow: 1,
               border: 'var(--border-dev)',
-              borderRadius: '5px',
+              // borderRadius: '5px',
               overflow: 'hidden',
+              backgroundColor: 'salmon',
             }}
           >
-            <AnimatePresence>
-              {layoutState != 0 && (
-                <motion.div
-                  variants={secVariant}
-                  initial={'initial'}
-                  animate={'animate'}
-                  exit={'initial'}
-                  style={{
-                    // height: '100px',
-                    margin: '20px',
-                    border: 'var(--border-secondary)',
-                    borderRadius: '5px',
-                  }}
-                >
-                  <div>2</div>
-                  <div>2</div>
-                  <div>2</div>
-                  <div>2s</div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {layoutState != 0 && (
+              <motion.div
+                variants={secVariant}
+                initial={'initial'}
+                animate={'animate'}
+                exit={'initial'}
+                style={{
+                  // height: '100px',
+                  // margin: '20px',
+                  border: 'var(--border-secondary)',
+                  borderRadius: '5px',
+                }}
+              >
+                <div>2</div>
+                <div>2</div>
+                <div>2</div>
+                <div>2s</div>
+              </motion.div>
+            )}
           </motion.div>
-        </div>
+        </AnimatePresence>
+        {/* </div> */}
       </div>
     </div>
   );
